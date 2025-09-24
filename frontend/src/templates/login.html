@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../styles/login.css">
+    <title>Login</title>
+</head>
+<body>
+<div class="container">
+<div class="container-form flex-column d-flex justify-content-center align-items-center">
+    <div class="logo text-center col-md-3">
+        <a href=""><img src="../styles/images/Logo-login.png" alt=""></a>
+    </div>
+    <div class="text-form text-center col-md-3">Вход</div>
+    <form class="col-md-3">
+        <div class="mb-3 col-6 input-group">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span><i class="bi bi-envelope-open"></i></span>
+                </div>
+            </div>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Электронная почта">
+        </div>
+        <div class="mb-3 col-6 input-group">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <i class="bi bi-lock"></i>
+                </div>
+            </div>
+            <input type="password" class="form-control" id="exampleInputPassword1" aria-describedby="passwordHelp" placeholder="Пароль">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Запомнить меня</label>
+        </div>
+        <button type="submit" class="btn btn-primary col-12">Войти</button>
+        <div class="sign-up mt-2">Ещё нет аккаунта?
+            <a href="/sign-up">Пройдите регистрацию</a> </div>
+    </form>
+</div>
+</div>
+<script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

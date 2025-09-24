@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../styles/sign-up.css">
+    <title>Sign-Up</title>
+</head>
+<body>
+<div class="container">
+<div class="container-form flex-column d-flex justify-content-center align-items-center">
+    <div class="logo text-center col-md-3">
+        <a href=""><img src="../styles/images/Logo-login.png" alt=""></a>
+    </div>
+    <div class="text-form text-center col-md-6">Создайте аккаунт</div>
+    <form class="col-md-3">
+        <div class="mb-3 col-6 input-group">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <i class="bi bi-person"></i>
+                </div>
+            </div>
+            <input type="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Имя">
+        </div>
+        <div class="mb-3 col-6 input-group">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <i class="bi bi-bi bi-person"></i>
+                </div>
+            </div>
+            <input type="last-name" class="form-control" id="last-name" aria-describedby="emailHelp" placeholder="Фамилия">
+        </div>
+        <div class="mb-3 col-6 input-group">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                   <i class="bi bi-envelope-open"></i>
+                </div>
+            </div>
+            <input type="email" class="form-control" id="tmail" aria-describedby="emailHelp" placeholder="Электронная почта">
+        </div>
+        <div class="mb-3 col-6 input-group">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <i class="bi bi-lock"></i>
+                </div>
+            </div>
+            <input type="password" class="form-control" id="Password" aria-describedby="passwordHelp" placeholder="Пароль">
+        </div>
+        <div class="mb-3 col-6 input-group">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <i class="bi bi-lock"></i>
+                </div>
+            </div>
+            <input type="password" class="form-control" id="Password-repeat" aria-describedby="passwordHelp" placeholder="Подтверждение пароля">
+        </div>
+        <button type="submit" class="btn btn-primary col-12">Войти</button>
+        <div class="login mt-2 text-center">Уже есть аккаунт?
+            <a href="/login">Войдите в систему</a> </div>
+    </form>
+</div>
+</div>
+<script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
