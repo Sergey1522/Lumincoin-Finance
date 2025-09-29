@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
-    <!--    <link rel="stylesheet" href="../../node_modules/fastbootstrap/dist/css/fastbootstrap.css">-->
-
-    <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="../../node_modules/chart.js/dist/chart.js"></script>
+    <script type="module" src="../../node_modules/@kurkle/color/dist/color.esm.js"></script>
     <link rel="stylesheet" href="../styles/layout.css">
     <link rel="stylesheet" href="../styles/common.css">
     <title>Dashboard</title>
@@ -75,50 +74,94 @@
                 <button type="button" class="btn-actions btn btn-outline-secondary">Год</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Все</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Интервал</button>
-                <input type="hidden" id="hiddenInput"/>
-<!--                <label id="calendarDay">Hello World!</label>-->
+
+                <div class="date-wrapper d-flex">
+                    <div class="date-content">
+                        <b>c</b>
+                        <input type="date" name="date" class="real-date" id="from-date">
+                        <span class="fake-date">Дата</span>
+                    </div>
+                    <div class="date-content">
+                        <b>до</b>
+                        <input type="date" name="date" class="real-date" id="before-date">
+                        <span class="fake-date">Дата</span>
+                    </div>
+                </div>
+
+
             </div>
         </div>
-        <div class="main-pie container-fluid d-flex align-items-center justify-content-between w-100">
+        <div class="main-pie container-fluid d-flex align-items-center justify-content-around ">
             <div class="pie-income-content d-flex flex-column align-items-center mb-3">
                 <div class="pie-income-text">Доходы</div>
                 <div class="pie-income-legend mb-3">
-                    <div class="legend">
-                        <div class="legend-item"><div class="legend-color red"></div>Red</div>
-                        <div class="legend-item"><div class="legend-color orange"></div>Orange</div>
-                        <div class="legend-item"><div class="legend-color yellow"></div>Yellow</div>
-                        <div class="legend-item"><div class="legend-color green"></div> Green</div>
-                        <div class="legend-item"><div class="legend-color blue"></div>Blue</div>
+                    <div class="legend d-flex align-items-center justify-content-center gap-2">
+                        <div class="legend-item">
+                            <div class="legend-color red"></div>
+                            Red
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color orange"></div>
+                            Orange
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color yellow"></div>
+                            Yellow
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color green"></div>
+                            Green
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color blue"></div>
+                            Blue
+                        </div>
                     </div>
                 </div>
                 <div class="pie-income"></div>
             </div>
 
-                <div class="vr"></div>
+            <div class="vr"></div>
 
             <div class="pie-expenses-content d-flex flex-column align-items-center mb-3">
                 <div class="pie-income-text">Расходы</div>
                 <div class="pie-income-legend mb-3">
-                    <div class="legend">
-                        <div class="legend-item"><div class="legend-color red"></div>Red</div>
-                        <div class="legend-item"><div class="legend-color orange"></div>Orange</div>
-                        <div class="legend-item"><div class="legend-color yellow"></div>Yellow</div>
-                        <div class="legend-item"><div class="legend-color green"></div> Green</div>
-                        <div class="legend-item"><div class="legend-color blue"></div>Blue</div>
+                    <div class="legend d-flex align-items-center justify-content-center gap-2">
+                        <div class="legend-item">
+                            <div class="legend-color red"></div>
+                            Red
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color orange"></div>
+                            Orange
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color yellow"></div>
+                            Yellow
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color green"></div>
+                            Green
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color blue"></div>
+                            Blue
+                        </div>
                     </div>
                 </div>
                 <div class="pie-expenses"></div>
             </div>
 
 
-
         </div>
     </div>
 
+    <div>
+<!--            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+        <canvas id="myChart"></canvas>
+    </div>
 
-    <script>
 
-    </script>
 </div>
 </div>
 
@@ -126,8 +169,10 @@
 <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
 <script src="../../node_modules/jquery-ui/dist/jquery-ui.js"></script>
-<script src="../components/chart.js"></script>
 
+
+
+<script type="module" src="../components/chart-pie.js"></script>
 
 
 </body>
