@@ -1,0 +1,18 @@
+body {
+    height: 100%;
+}
+
+
+.container-form {
+    margin-top: 100px;
+}
+.logo {
+    margin-bottom: 60px;
+}
+.text-form {
+    font-weight: 500;
+    font-size: 40px;
+    text-align: center;
+    color: #052c65;
+    margin-bottom: 20px;
+}

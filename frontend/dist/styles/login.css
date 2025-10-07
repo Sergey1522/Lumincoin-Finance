@@ -1,0 +1,28 @@
+body {
+    height: 100%;
+}
+
+
+.container-form {
+    margin-top: 150px;
+}
+.logo {
+    margin-bottom: 60px;
+}
+.text-form {
+    font-weight: 500;
+    font-size: 40px;
+    text-align: center;
+    color: #052c65;
+    margin-bottom: 20px;
+}
+.sign-up {
+    font-weight: 400;
+    font-size: 12px;
+    color: #000;
+}
+.sign-up a {
+    font-weight: 400;
+    font-size: 12px;
+    color: #0d6efd;
+}

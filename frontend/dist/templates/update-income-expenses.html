@@ -4,15 +4,26 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
-
-    <!--    <script type="module" src="../../node_modules/@kurkle/color/dist/color.esm.js"></script>-->
-    <link rel="stylesheet" href="../styles/layout.css">
+    <link rel="stylesheet" href="../styles/update-income.css">
     <link rel="stylesheet" href="../styles/common.css">
-    <script type="module" src="../../node_modules/chart.js/dist/chart.js"></script>
-    <title>Главная</title>
+    <title>Доходы</title>
 </head>
 <body>
 <div class="d-flex" id="wrapper">
+    <div class="modal">
+        <div class="modal-window">
+            <div class="modal-window-content d-flex flex-column align-items-center">
+                <div class="modal-window-title">Вы действительно хотите удалить категорию? Связанные доходы останутся
+                    без
+                    категории.
+                </div>
+                <div class="modal-window-btn d-flex gap-4">
+                    <button type="button" class="btn btn-success">Да, удалить</button>
+                    <button type="button" class="btn btn-danger">Не удалять</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Sidebar-->
     <div class="sidebar d-flex flex-column flex-shrink-0  border-end">
         <a href="/"
@@ -27,34 +38,34 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item item">
-                <a href="#" class="nav-link active" aria-current="true">
+                <a href="#" class="nav-link" role="button" aria-current="true">
                     <i class="bi bi-house"></i>
                     Главная
                 </a>
             </li>
             <li class="nav-item item">
-                <a href="#" class="nav-link ">
+                <a href="#" class="nav-link" role="link">
                     <i class="bi bi-cash-coin"></i>
                     Доходы & Расходы
                 </a>
             </li>
             <li class="nav-item item">
-                <a href="" role="button" class="nav-link btn d-flex align-items-center dropdown-toggle"
+                <a href="" role="button" class="nav-link btn d-flex align-items-center dropdown-toggle active"
                    data-bs-toggle="dropdown" aria-expanded="false">
                     Категории
                     <i class="arrow bi bi-chevron-right"></i>
                 </a>
 
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Доходы</a></li>
+                <ul class="dropdown-menu show">
+                    <li><a class="dropdown-item active" href="#">Доходы</a></li>
                     <li><a class="dropdown-item" href="#">Расходы</a></li>
                 </ul>
             </li>
         </ul>
 
         <div class="balance mt-auto">
-            Баланс: <span>500$</span>
-
+            Баланс:
+            <span>500$</span>
         </div>
         <hr>
         <div class="user">
@@ -65,69 +76,35 @@
             </a>
         </div>
     </div>
-    <div class="main w-100">
-        <div class="container-fluid">
-            <div class="container-text">Главная</div>
-            <div class="container-tabs d-flex align-items-center">
-                <button type="button" class="btn-actions btn btn-outline-secondary active">Сегодня</button>
-                <button type="button" class="btn-actions btn btn-outline-secondary">Неделя</button>
-                <button type="button" class="btn-actions btn btn-outline-secondary">Месяц</button>
-                <button type="button" class="btn-actions btn btn-outline-secondary">Год</button>
-                <button type="button" class="btn-actions btn btn-outline-secondary">Все</button>
-                <button type="button" class="btn-actions btn btn-outline-secondary">Интервал</button>
-
-                <div class="date-wrapper d-flex">
-                    <div class="date-content">
-                        <b>c</b>
-                        <input type="date" name="date" class="real-date" id="from-date">
-                        <span class="fake-date">Дата</span>
-                    </div>
-                    <div class="date-content">
-                        <b>до</b>
-                        <input type="date" name="date" class="real-date" id="before-date">
-                        <span class="fake-date">Дата</span>
-                    </div>
-                </div>
-
-
+    <div class="main">
+        <div class="container-text">Редактирование дохода/расхода</div>
+        <div class="update-create">
+            <div class="update-input d-flex flex-column gap-3">
+                <input class="form-control" type="text" name="income" id="type" placeholder="Доход">
+                <input class="form-control" type="text" name="income" id="category" placeholder="Зарплата">
+                <input class="form-control" type="text" name="income" id="amount" placeholder="500$">
+                <input class="form-control" type="text" name="income" id="date" placeholder="11.09.2022">
+                <input class="form-control" type="text" name="income" id="comments" placeholder="Комментарий...">
+            </div>
+            <div class="update-btn d-flex gap-4">
+                <button type="button" class="btn btn-success">Сохранить</button>
+                <button type="button" class="btn btn-danger">Отмена</button>
             </div>
         </div>
-        <div class="main-pie container-fluid d-flex align-items-center justify-content-around ">
-            <div class="pie-income-content d-flex flex-column align-items-center mb-3">
-                <div class="pie-income-text">Доходы</div>
-                <div class="pie-income-legend mb-3">
-                    <div>
-                        <canvas id="myChart" width="447px" height="467"></canvas>
-                    </div>
-                </div>
-            </div>
 
-            <div class="vr"></div>
-
-            <div class="pie-expenses-content d-flex flex-column align-items-center mb-3">
-                <div class="pie-income-text">Расходы</div>
-                <div class="pie-income-legend mb-3">
-                    <div>
-                        <canvas id="myChart_2" width="447px" height="467"></canvas>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
     </div>
 
 
-</div>
-</div>
+    <script>
 
+    </script>
+</div>
+</div>
+<script src="../components/chart-pie.js"></script>
 <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-<script src="../../node_modules/jquery-ui/dist/jquery-ui.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="../components/chart-pie.js"></script>
+<script type="module" src="../../node_modules/chart.js/dist/chart.umd.min.js"></script>
 
 
 </body>

@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+    <!--    <link rel="stylesheet" href="../../node_modules/fastbootstrap/dist/css/fastbootstrap.css">-->
 
-    <!--    <script type="module" src="../../node_modules/@kurkle/color/dist/color.esm.js"></script>-->
-    <link rel="stylesheet" href="../styles/layout.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!--    <link rel="stylesheet" href="../styles/layout.css">-->
+    <link rel="stylesheet" href="../styles/income-expenses-modal.css">
     <link rel="stylesheet" href="../styles/common.css">
-    <script type="module" src="../../node_modules/chart.js/dist/chart.js"></script>
-    <title>Главная</title>
+    <title>Доходы & Расходы</title>
 </head>
 <body>
 <div class="d-flex" id="wrapper">
+    <div class="modal d-flex align-items-center justify-content-center">
+        <div class="modal-window">
+            <div class="modal-window-content d-flex flex-column align-items-center">
+                <div class="modal-window-title">Вы действительно хотите удалить операцию?
+                </div>
+                <div class="modal-window-btn d-flex gap-4">
+                    <button type="button" class="btn btn-success">Да, удалить</button>
+                    <button type="button" class="btn btn-danger">Не удалять</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Sidebar-->
     <div class="sidebar d-flex flex-column flex-shrink-0  border-end">
         <a href="/"
@@ -27,13 +40,13 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item item">
-                <a href="#" class="nav-link active" aria-current="true">
+                <a href="#" class="nav-link" aria-current="true">
                     <i class="bi bi-house"></i>
                     Главная
                 </a>
             </li>
             <li class="nav-item item">
-                <a href="#" class="nav-link ">
+                <a href="#" class="nav-link active">
                     <i class="bi bi-cash-coin"></i>
                     Доходы & Расходы
                 </a>
@@ -52,9 +65,9 @@
             </li>
         </ul>
 
-        <div class="balance mt-auto">
-            Баланс: <span>500$</span>
-
+        <div class="balance mt-auto text-center">
+            Баланс:
+            500$
         </div>
         <hr>
         <div class="user">
@@ -66,68 +79,67 @@
         </div>
     </div>
     <div class="main w-100">
-        <div class="container-fluid">
-            <div class="container-text">Главная</div>
-            <div class="container-tabs d-flex align-items-center">
+        <div class="container">
+            <div class="container-text">Доходы и расходы</div>
+            <div class="actions-button">
+                <button type="button" class="btn btn-success">Создать доход</button>
+                <button type="button" class="btn btn-danger">Создать расход</button>
+            </div>
+            <div class="container-tabs d-flex align-items-center mb-5">
                 <button type="button" class="btn-actions btn btn-outline-secondary active">Сегодня</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Неделя</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Месяц</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Год</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Все</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Интервал</button>
-
-                <div class="date-wrapper d-flex">
-                    <div class="date-content">
-                        <b>c</b>
-                        <input type="date" name="date" class="real-date" id="from-date">
-                        <span class="fake-date">Дата</span>
-                    </div>
-                    <div class="date-content">
-                        <b>до</b>
-                        <input type="date" name="date" class="real-date" id="before-date">
-                        <span class="fake-date">Дата</span>
-                    </div>
-                </div>
-
-
+                <!--                <input type="date" class="form-control" id="date" name="date" placeholder="Дата" required>-->
+                <!--                <label for="date"><a href="">Дата</a></label>-->
             </div>
-        </div>
-        <div class="main-pie container-fluid d-flex align-items-center justify-content-around ">
-            <div class="pie-income-content d-flex flex-column align-items-center mb-3">
-                <div class="pie-income-text">Доходы</div>
-                <div class="pie-income-legend mb-3">
-                    <div>
-                        <canvas id="myChart" width="447px" height="467"></canvas>
-                    </div>
-                </div>
+            <div class="container">
+            <table class="table w-100">
+                <thead>
+                <tr>
+                    <th scope="col" class="text-center">№ операции</th>
+                    <th scope="col" class="text-center">Тип</th>
+                    <th scope="col" class="text-center">Категория</th>
+                    <th scope="col" class="text-center">Сумма</th>
+                    <th scope="col" class="text-center">Дата</th>
+                    <th scope="col" class="text-center">Комментарий</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row" class="text-center">1</th>
+                    <td class="text-success text-center">доход</td>
+                    <td class="text-center">зарплата</td>
+                    <td class="text-center">500$</td>
+                    <td class="text-center">11.09.2022</td>
+                    <td class="text-center"></td>
+                    <td class="text-center"><a href=""><i class="bi bi-trash"></i></a>
+                        <a href=""><i class="bi bi-pencil"></i></a></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-center">2</th>
+                    <td class="text-danger text-center">расход</td>
+                    <td class="text-center">жильё</td>
+                    <td class="text-center">2 500$</td>
+                    <td class="text-center">12.09.2022</td>
+                    <td class="text-center"></td>
+                    <td class="text-center"><a href=""><i class="bi bi-trash"></i></a>
+                        <a href=""><i class="bi bi-pencil"></i></a></td>
+                </tr>
+                </tbody>
+            </table>
             </div>
-
-            <div class="vr"></div>
-
-            <div class="pie-expenses-content d-flex flex-column align-items-center mb-3">
-                <div class="pie-income-text">Расходы</div>
-                <div class="pie-income-legend mb-3">
-                    <div>
-                        <canvas id="myChart_2" width="447px" height="467"></canvas>
-                    </div>
-                </div>
-            </div>
-
-
         </div>
     </div>
-
-
 </div>
-</div>
-
+<script src="../components/chart-pie.js"></script>
 <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-<script src="../../node_modules/jquery-ui/dist/jquery-ui.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="../components/chart-pie.js"></script>
+<script type="module" src="../../node_modules/chart.js/dist/chart.umd.min.js"></script>
 
 
 </body>

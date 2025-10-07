@@ -1,27 +1,47 @@
-import {Chart} from "/chart.js";
+// import {Chart, PieController} from "/chart.js";
 
+const ctx = document.getElementById("myChart");
 
-const ctx = document.getElementById('myChart');
- const myChart = new Chart(ctx, {
-     type: 'pie',
-     data: {
-         labels: [
-             'Red',
-             'Blue',
-             'Yellow'
-         ],
-         datasets: [{
-             label: 'My First Dataset',
-             data: [300, 50, 100],
-             backgroundColor: [
-                 'rgb(255, 99, 132)',
-                 'rgb(54, 162, 235)',
-                 'rgb(255, 205, 86)'
-             ],
-             hoverOffset: 4
-         }]
-     },
+new Chart(ctx, {
+  type: "pie",
+  data: {
+    labels: ["Red", "Orange", "Yellow", "Green", "Blue"],
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [35, 50, 25, 25, 15],
+        backgroundColor: [
+          "#DC3545",
+          "#fd7e14",
+          "#ffc107",
+          "#20c997",
+          "#0d6efd",
+        ],
+        hoverOffset: 4,
+      },
+    ],
+  },
 });
 
+const ctx_2 = document.getElementById("myChart_2");
 
-
+new Chart(ctx_2, {
+  type: "pie",
+  data: {
+    labels: ["Red", "Orange", "Yellow", "Green", "Blue"],
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [10, 15, 35, 35, 25],
+        backgroundColor: [
+          "#DC3545",
+          "#fd7e14",
+          "#ffc107",
+          "#20c997",
+          "#0d6efd",
+        ],
+        hoverOffset: 4,
+      },
+    ],
+  },
+});
