@@ -8,6 +8,7 @@ export class Signup {
         this.emailElement = document.getElementById('email');
         this.passwordElement = document.getElementById('password');
         this.passwordRepeatElement = document.getElementById('password-repeat');
+        this.commonErorrElement = document.getElementById('common-error');
 
         document.getElementById('process-button').addEventListener('click', this.signUp.bind(this));
 
@@ -68,9 +69,12 @@ export class Signup {
                 });
                 if (result) {
                     if (result.error || !result.user) {
+                        this.commonErorrElement.style.display = 'block';
                         throw new Error(result.message);
                     }
-                } console.log(result);
+                    location.href = '/login'
+                }
+                console.log(result);
 
 
             }catch(err) {
@@ -78,10 +82,10 @@ export class Signup {
             }
 
 
+
         } else {
             console.log('error')
         }
-
 
     }
 }

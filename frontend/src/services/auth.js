@@ -1,4 +1,5 @@
 import {config} from "../../config/config";
+import {CustomHttp} from "./custom-http";
 
 export class Auth {
     static accessTokenKey = 'accessToken';
@@ -29,7 +30,7 @@ export class Auth {
             }
         }
         this.removeTokens();
-        location.href = '/';
+        // location.href = '/';
         return false;
 
     }

@@ -6,16 +6,16 @@
     </div>
     <div class="text-form text-center col-md-6">Создайте аккаунт</div>
     <div id="common-error" class="error invalid-feedback text-center mb-3"></div>
-    <form class="col-md-3">
+    <form class="col-md-3"  novalidate>
         <div class="mb-3 col-6 input-group">
-            <span id="name-error" class="error invalid-feedback">Введите Имя</span>
-            <div class="input-group-append">
 
+            <div class="input-group-append">
                 <div class="input-group-text">
                     <i class="bi bi-person"></i>
                 </div>
             </div>
-            <input type="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Имя">
+            <input type="text" class="form-control" id="name" aria-describedby="name" placeholder="Имя">
+            <span id="name-error" class="error invalid-feedback">Введите Имя</span>
         </div>
         <div class="mb-3 col-6 input-group">
             <span id="last-name-error" class="error invalid-feedback">Введите Фамилию</span>
@@ -33,7 +33,7 @@
                    <i class="bi bi-envelope-open"></i>
                 </div>
             </div>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Электронная почта">
+            <input type="email" class="form-control" id="email" aria-describedby="" placeholder="Электронная почта">
         </div>
         <div class="mb-3 col-6 input-group">
             <span id="password-error" class="error invalid-feedback">Введите пароль</span>
@@ -42,7 +42,7 @@
                     <i class="bi bi-lock"></i>
                 </div>
             </div>
-            <input type="password" class="form-control" id="password" aria-describedby="passwordHelp" placeholder="Пароль">
+            <input type="password" class="form-control" id="password" aria-describedby="password-error" placeholder="Пароль">
         </div>
         <div class="mb-3 col-6 input-group">
             <span id="password-repeat-error" class="error invalid-feedback">Пароль и повторение пароля должны совпадать</span>
