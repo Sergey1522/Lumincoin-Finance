@@ -1,5 +1,7 @@
 import {Signup} from "./components/signup.js";
 import {Login} from "./components/login";
+import {Main} from "./components/main";
+import {Auth} from "./services/auth";
 
 export class Router {
     constructor() {
@@ -10,6 +12,16 @@ export class Router {
         this.initEvent();
 
         this.routes = [
+            {
+                route: "/",
+                title: "Главная",
+                template: "/templates/main.html",
+                styles: "main.css",
+                load: () => {
+                    new Main();
+
+                },
+            },
 
             {
                 route: "/signup",
@@ -37,7 +49,11 @@ export class Router {
     }
    async activateRouter() {
         const urlRoute = window.location.pathname;
+
         const newRoute = this.routes.find((item) => item.route === urlRoute);
+        if (!newRoute || newRoute.route ===  '/') {
+            await Auth.processUnauthorizedResponse();
+        }
         if (newRoute) {
             if (newRoute.title) {
                 this.titleElement.innerHTML = newRoute.title;

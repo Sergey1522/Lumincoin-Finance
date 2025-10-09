@@ -23,14 +23,15 @@ export class Auth {
             if (response && response.status === 200) {
                 const result = await response.json();
                 if (result && !result.error) {
-                    this.setTokens(result.accessToken, result.refreshToken);
+                    this.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
+                    window.location.href = '/';
                     return true;
 
                 }
             }
         }
         this.removeTokens();
-        // location.href = '/';
+        location.href = '/signup';
         return false;
 
     }
@@ -40,6 +41,7 @@ export class Auth {
         localStorage.setItem(this.accessTokenKey, accessToken)
         localStorage.setItem(this.refreshTokenKey, refreshToken)
     }
+
     static removeTokens () {
         localStorage.removeItem(this.accessTokenKey)
         localStorage.removeItem(this.refreshTokenKey)

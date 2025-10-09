@@ -44,16 +44,12 @@ export class Login {
                     if (result.error || !result.user) {
                         throw new Error(result.message);
                     }
-                    Auth.setTokens(result.accessToken , result.refreshToken)
-                    // location.href = '/'
+                    Auth.setTokens(result.tokens.accessToken , result.tokens.refreshToken)
                 }
                 console.log(result);
-
-
             }catch(err) {
                 console.log('error')
             }
-
 
 
         } else {

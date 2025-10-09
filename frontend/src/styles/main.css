@@ -1,0 +1,78 @@
+
+
+.container-tabs {
+    gap: 20px;
+    /*margin: 100px 0 0 60px;*/
+    margin-top: 60px;
+}
+
+.btn-actions {
+    width: 100px;
+    height: 37px;
+}
+
+
+
+/*DatePicker*/
+.date-content {
+    position: relative;
+    padding: 9px 12px;
+
+    /*height: 37px;*/
+}
+.date-content b {
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    text-align: center;
+    color: #000;
+}
+
+.fake-date {
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    text-align: center;
+    color: #6c757d;
+}
+
+.real-date {
+    position: absolute;
+    width: 100%;
+    left: -18px;
+    top: 9px;
+    opacity: 0;
+    cursor: pointer;
+    border: 0;
+
+
+
+}
+
+
+/*Pie*/
+.main-pie {
+    /*max-width: 1043px;*/
+    margin-top: 140px;
+    /*margin: auto;*/
+}
+
+.pie-income-text {
+    font-weight: 500;
+    font-size: 28px;
+    color: #290661;
+}
+
+/* .pie-income-content {
+    width: 437px;
+    height: 467px;
+} */
+
+
+
+
+
+
+

@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
-    <!--    <link rel="stylesheet" href="../../node_modules/fastbootstrap/dist/css/fastbootstrap.css">-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">-->
+<!--    <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">-->
 
-    <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!--    &lt;!&ndash;    <script type="module" src="../../node_modules/@kurkle/color/dist/color.esm.js"></script>&ndash;&gt;-->
 <!--    <link rel="stylesheet" href="../styles/main.css">-->
-    <link rel="stylesheet" href="../styles/income-expenses.css">
-    <link rel="stylesheet" href="../styles/common.css">
-    <title>Доходы & Расходы</title>
-</head>
-<body>
+<!--    <link rel="stylesheet" href="../styles/common.css">-->
+<!--    <script type="module" src="../../node_modules/chart.js/dist/chart.js"></script>-->
+<!--    <title>Главная</title>-->
+<!--</head>-->
+<!--<body>-->
 <div class="d-flex" id="wrapper">
     <!-- Sidebar-->
     <div class="sidebar d-flex flex-column flex-shrink-0  border-end">
@@ -28,13 +27,13 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item item">
-                <a href="#" class="nav-link" aria-current="true">
+                <a href="#" class="nav-link active" aria-current="true">
                     <i class="bi bi-house"></i>
                     Главная
                 </a>
             </li>
             <li class="nav-item item">
-                <a href="#" class="nav-link active">
+                <a href="#" class="nav-link ">
                     <i class="bi bi-cash-coin"></i>
                     Доходы & Расходы
                 </a>
@@ -53,9 +52,9 @@
             </li>
         </ul>
 
-        <div class="balance mt-auto text-center">
-            Баланс:
-            500$
+        <div class="balance mt-auto">
+            Баланс: <span>500$</span>
+
         </div>
         <hr>
         <div class="user">
@@ -67,68 +66,69 @@
         </div>
     </div>
     <div class="main w-100">
-        <div class="container">
-            <div class="container-text">Доходы и расходы</div>
-            <div class="actions-button">
-                <button type="button" class="btn btn-success">Создать доход</button>
-                <button type="button" class="btn btn-danger">Создать расход</button>
-            </div>
-            <div class="container-tabs d-flex align-items-center mb-5">
+        <div class="container-fluid">
+            <div class="container-text">Главная</div>
+            <div class="container-tabs d-flex align-items-center">
                 <button type="button" class="btn-actions btn btn-outline-secondary active">Сегодня</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Неделя</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Месяц</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Год</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Все</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Интервал</button>
-                <!--                <input type="date" class="form-control" id="date" name="date" placeholder="Дата" required>-->
-                <!--                <label for="date"><a href="">Дата</a></label>-->
-            </div>
-            <div class="container">
-            <table class="table w-100">
-                <thead>
-                <tr>
-                    <th scope="col" class="text-center">№ операции</th>
-                    <th scope="col" class="text-center">Тип</th>
-                    <th scope="col" class="text-center">Категория</th>
-                    <th scope="col" class="text-center">Сумма</th>
-                    <th scope="col" class="text-center">Дата</th>
-                    <th scope="col" class="text-center">Комментарий</th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td class="text-success text-center">доход</td>
-                    <td class="text-center">зарплата</td>
-                    <td class="text-center">500$</td>
-                    <td class="text-center">11.09.2022</td>
-                    <td class="text-center"></td>
-                    <td class="text-center"><a href=""><i class="bi bi-trash"></i></a>
-                        <a href=""><i class="bi bi-pencil"></i></a></td>
-                </tr>
-                <tr>
-                    <th scope="row" class="text-center">2</th>
-                    <td class="text-danger text-center">расход</td>
-                    <td class="text-center">жильё</td>
-                    <td class="text-center">2 500$</td>
-                    <td class="text-center">12.09.2022</td>
-                    <td class="text-center"></td>
-                    <td class="text-center"><a href=""><i class="bi bi-trash"></i></a>
-                        <a href=""><i class="bi bi-pencil"></i></a></td>
-                </tr>
-                </tbody>
-            </table>
+
+                <div class="date-wrapper d-flex">
+                    <div class="date-content">
+                        <b>c</b>
+                        <input type="date" name="date" class="real-date" id="from-date">
+                        <span class="fake-date">Дата</span>
+                    </div>
+                    <div class="date-content">
+                        <b>до</b>
+                        <input type="date" name="date" class="real-date" id="before-date">
+                        <span class="fake-date">Дата</span>
+                    </div>
+                </div>
+
+
             </div>
         </div>
+        <div class="main-pie container-fluid d-flex align-items-center justify-content-around ">
+            <div class="pie-income-content d-flex flex-column align-items-center mb-3">
+                <div class="pie-income-text">Доходы</div>
+                <div class="pie-income-legend mb-3">
+                    <div>
+                        <canvas id="myChart" width="447px" height="467"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vr"></div>
+
+            <div class="pie-expenses-content d-flex flex-column align-items-center mb-3">
+                <div class="pie-income-text">Расходы</div>
+                <div class="pie-income-legend mb-3">
+                    <div>
+                        <canvas id="myChart_2" width="447px" height="467"></canvas>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
+
+
 </div>
-<script src="../components/chart-pie.js"></script>
-<script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-<script type="module" src="../../node_modules/chart.js/dist/chart.umd.min.js"></script>
 
 
-</body>
-</html>
+<!--<script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>-->
+<!--<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>-->
+<!--<script src="../../node_modules/jquery/dist/jquery.min.js"></script>-->
+<!--<script src="../../node_modules/jquery-ui/dist/jquery-ui.js"></script>-->
+
+<!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+<!--<script src="../components/chart-pie.js"></script>-->
+
+
+<!--</body>-->
+<!--</html>-->
