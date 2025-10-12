@@ -62,7 +62,7 @@ export class Signup {
             try {
                 const result = await CustomHttp.request(config.host + '/signup', 'POST', {
                     name: this.nameElement.value,
-                    lastName: this.nameElement.value,
+                    lastName: this.lastNameElement.value,
                     email: this.emailElement.value,
                     password: this.passwordElement.value,
                     passwordRepeat: this.passwordRepeatElement.value,
@@ -72,7 +72,7 @@ export class Signup {
                         this.commonErorrElement.style.display = 'block';
                         throw new Error(result.message);
                     }
-                    location.href = '/login'
+                    location.href = '/login';
                 }
                 console.log(result);
 

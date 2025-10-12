@@ -24,7 +24,7 @@ export class Auth {
                 const result = await response.json();
                 if (result && !result.error) {
                     this.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
-                    window.location.href = '/';
+                    // window.location.href = '/';
                     return true;
 
                 }
@@ -37,14 +37,32 @@ export class Auth {
     }
 
 
+
+
     static setTokens (accessToken, refreshToken) {
         localStorage.setItem(this.accessTokenKey, accessToken)
         localStorage.setItem(this.refreshTokenKey, refreshToken)
+    }
+    static getTokens() {
+        localStorage.getItem(this.accessTokenKey);
+        localStorage.getItem(this.refreshTokenKey);
+
     }
 
     static removeTokens () {
         localStorage.removeItem(this.accessTokenKey)
         localStorage.removeItem(this.refreshTokenKey)
+    }
+    static setUserInfo(info) {
+        localStorage.setItem(this.userInfoKey, JSON.stringify(info));
+    }
+
+    static getUserInfo() {
+        const userInfo = localStorage.getItem(this.userInfoKey);
+        if (userInfo) {
+            return JSON.parse(userInfo)
+        }
+        return null;
     }
 
 }

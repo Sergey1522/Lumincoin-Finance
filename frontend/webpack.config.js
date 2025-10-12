@@ -32,6 +32,7 @@ module.exports = {
                 {from: "./node_modules/bootstrap-icons/font/bootstrap-icons.min.css", to: "css"},
                 {from: "./node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2", to: "css/fonts"},
                 {from: "./node_modules/bootstrap/dist/js/bootstrap.min.js", to: "js"},
+                {from: "./node_modules/chart.js/dist/chart.umd.min.js", to: "js"},
             ]
         }),
     ],

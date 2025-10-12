@@ -7,7 +7,7 @@ export class Login {
 
         this.emailElement = document.getElementById('email');
         this.passwordElement = document.getElementById('password');
-        this.rememberMe = document.getElementById('remember-me');
+        this.rememberMeElement = document.getElementById('remember-me');
 
         document.getElementById('process-button').addEventListener('click', this.login.bind(this));
 
@@ -39,14 +39,23 @@ export class Login {
                 const result = await CustomHttp.request(config.host + '/login', 'POST', {
                     email: this.emailElement.value,
                     password: this.passwordElement.value,
+                    rememberMe: this.rememberMeElement.checked,
                 });
                 if (result) {
                     if (result.error || !result.user) {
                         throw new Error(result.message);
                     }
                     Auth.setTokens(result.tokens.accessToken , result.tokens.refreshToken)
+                    Auth.setUserInfo(result.user);
                 }
-                console.log(result);
+                const userTokens = localStorage.getItem(Auth.accessTokenKey);
+
+                if (userTokens) {
+                    location.href = '/';
+                }else {
+                    location.href = '/login';
+                }
+
             }catch(err) {
                 console.log('error')
             }
