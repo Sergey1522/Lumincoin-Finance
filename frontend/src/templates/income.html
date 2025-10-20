@@ -1,24 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../styles/income.css">
-    <link rel="stylesheet" href="../styles/common.css">
-    <title>Доходы</title>
-</head>
-<body>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">-->
+<!--    <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">-->
+<!--    <link rel="stylesheet" href="../styles/income.css">-->
+<!--    <link rel="stylesheet" href="../styles/common.css">-->
+<!--    <title>Доходы</title>-->
+<!--</head>-->
+<!--<body>-->
 <div class="d-flex" id="wrapper">
-    <div class="modal">
+    <div class="modal" id="modal">
         <div class="modal-window">
             <div class="modal-window-content d-flex flex-column align-items-center">
             <div class="modal-window-title">Вы действительно хотите удалить категорию? Связанные доходы останутся без
                 категории.
             </div>
             <div class="modal-window-btn d-flex gap-4">
-                <button type="button" class="btn btn-success">Да, удалить</button>
-                <button type="button" class="btn btn-danger">Не удалять</button>
+                <button type="button" class="btn btn-success" id="yes">Да, удалить</button>
+                <button type="button" class="btn btn-danger" id="no">Не удалять</button>
             </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item item">
-                <a href="#" class="nav-link" role="button" aria-current="true">
+                <a href="/" class="nav-link" role="button" aria-current="true">
                     <i class="bi bi-house"></i>
                     Главная
                 </a>
@@ -56,7 +56,7 @@
                 </a>
 
                 <ul class="dropdown-menu show">
-                    <li><a class="dropdown-item active" href="#">Доходы</a></li>
+                    <li><a class="dropdown-item active" href="/income">Доходы</a></li>
                     <li><a class="dropdown-item" href="#">Расходы</a></li>
                 </ul>
             </li>
@@ -77,54 +77,21 @@
     </div>
     <div class="main">
         <div class="container-text">Доходы</div>
-        <div class="income-actions d-flex align-items-center flex-wrap gap-4">
-            <div class="income-action">
-                <div class="income-action-title">Депозиты</div>
-                <div class="income-action-btn">
-                    <button role="link" class="btn btn-primary">Редактировать</button>
-                    <button role="link" class="btn btn-danger">Удалить</button>
-                </div>
-            </div>
-            <div class="income-action">
-                <div class="income-action-title">Зарплата</div>
-                <div class="income-action-btn">
-                    <button role="link" class="btn btn-primary">Редактировать</button>
-                    <button role="link" class="btn btn-danger">Удалить</button>
-                </div>
-            </div>
-            <div class="income-action">
-                <div class="income-action-title">Сбережения</div>
-                <div class="income-action-btn">
-                    <button role="link" class="btn btn-primary">Редактировать</button>
-                    <button role="link" class="btn btn-danger">Удалить</button>
-                </div>
-            </div>
-            <div class="income-action">
-                <div class="income-action-title">Инвестиции</div>
-                <div class="income-action-btn">
-                    <button role="link" class="btn btn-primary">Редактировать</button>
-                    <button role="link" class="btn btn-danger">Удалить</button>
-                </div>
-            </div>
+        <div class="income-actions d-flex align-items-center flex-wrap gap-4" id="income-action">
             <div class="income-action d-flex justify-content-center align-items-center"><a class="text-decoration-none"
-                                                                                           href="#">+</a></div>
+                                                                                           href="/create-income"id="add-income">+</a></div>
 
         </div>
 
     </div>
-
-
-    <script>
-
-    </script>
 </div>
-</div>
-<script src="../components/chart-pie.js"></script>
-<script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-<script type="module" src="../../node_modules/chart.js/dist/chart.umd.min.js"></script>
+
+<!--<script src="../components/chart-pie.js"></script>-->
+<!--<script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>-->
+<!--<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>-->
+<!--<script src="../../node_modules/jquery/dist/jquery.min.js"></script>-->
+<!--<script type="module" src="../../node_modules/chart.js/dist/chart.umd.min.js"></script>-->
 
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->

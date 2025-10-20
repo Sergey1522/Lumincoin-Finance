@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../styles/create-income.css">
-    <link rel="stylesheet" href="../styles/common.css">
-    <title>Доходы</title>
-</head>
-<body>
+
 <div class="d-flex" id="wrapper">
     <div class="modal">
         <div class="modal-window">
@@ -80,11 +70,11 @@
         <div class="container-text">Создание категории доходов</div>
         <div class="income-create">
             <div class="create-input">
-                <input class="form-control" type="text" name="income" id="income" placeholder="Название...">
+                <input class="form-control" id="create-income" type="text" name="income" id="income" placeholder="Название...">
             </div>
             <div class="create-btn d-flex gap-4">
-                <button type="button" class="btn btn-success">Создать</button>
-                <button type="button" class="btn btn-danger">Отмена</button>
+                <button type="button" id="create" class="btn btn-success">Создать</button>
+                <button type="button" id="cancel" class="btn btn-danger">Отмена</button>
             </div>
         </div>
 
@@ -95,13 +85,4 @@
 
     </script>
 </div>
-</div>
-<script src="../components/chart-pie.js"></script>
-<script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-<script type="module" src="../../node_modules/chart.js/dist/chart.umd.min.js"></script>
 
-
-</body>
-</html>

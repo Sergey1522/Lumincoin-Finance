@@ -9,12 +9,14 @@ export class Main {
         this.getInfoAccessToken = localStorage.getItem(Auth.accessTokenKey);
         this.getInfoRefreshToken = localStorage.getItem(Auth.refreshTokenKey);
         this.getInfoUser = Auth.getUserInfo();
-        if (this.getInfoAccessToken) {
+        this.getInfoUserTokens = Auth.getTokens();
+        if (this.getInfoUserTokens) {
             this.initBalance().then();
             this.initMain();
             this.initChartJs();
         }
         console.log(this.getInfoUser)
+        console.log(this.getInfoUserTokens)
 
 
 

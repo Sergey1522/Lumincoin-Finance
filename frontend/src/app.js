@@ -1,3 +1,5 @@
+import '@popperjs/core';
+import 'bootstrap';
 import {Router} from "./router.js";
 
 class App {

@@ -39,26 +39,23 @@
                 </a>
             </li>
             <li class="nav-item item">
-<!--                <select class="form-select" aria-label="Пример выбора по умолчанию">-->
-<!--                    <option selected>Категории</option>-->
-<!--                    <option value="1">Доходы</option>-->
-<!--                    <option value="2">Расходы</option>-->
-<!--                </select>-->
-                <a href="#" role="button" id="button" class="nav-link btn d-flex align-items-center dropdown-toggle"
+
+                <button href="#" role="button" id="button" class="nav-link btn d-flex align-items-center dropdown-toggle"
                    data-bs-toggle="dropdown" >
                     Категории
                     <i class="arrow bi bi-chevron-right"></i>
-                </a>
+                </button>
 
                 <ul class="dropdown-menu" id="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Доходы</a></li>
+                    <li><a class="dropdown-item" href="/income">Доходы</a></li>
                     <li><a class="dropdown-item" href="#">Расходы</a></li>
                 </ul>
+
             </li>
         </ul>
 
         <div class="balance mt-auto">
-            Баланс: <span>500$</span>
+            Баланс: <span id="balance"></span>
         </div>
         <hr>
         <div class="user">

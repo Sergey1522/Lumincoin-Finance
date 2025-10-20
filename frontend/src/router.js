@@ -2,6 +2,8 @@ import {Signup} from "./components/signup.js";
 import {Login} from "./components/login";
 import {Main} from "./components/main";
 import {Auth} from "./services/auth";
+import {Income} from "./components/income";
+import {CreateIncome} from "./components/create-income";
 
 export class Router {
     constructor() {
@@ -19,6 +21,26 @@ export class Router {
                 styles: "main.css",
                 load: () => {
                     new Main();
+
+                },
+            },
+            {
+                route: "/income",
+                title: "Доходы",
+                template: "/templates/income.html",
+                styles: "income.css",
+                load: () => {
+                    new Income();
+
+                },
+            },
+            {
+                route: "/create-income",
+                title: "Доходы",
+                template: "/templates/create-income.html",
+                styles: "create-income.css",
+                load: () => {
+                    new CreateIncome();
 
                 },
             },
