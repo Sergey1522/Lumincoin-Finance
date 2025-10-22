@@ -1,14 +1,4 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">-->
-<!--    <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">-->
-<!--    <link rel="stylesheet" href="../styles/income.css">-->
-<!--    <link rel="stylesheet" href="../styles/common.css">-->
-<!--    <title>Доходы</title>-->
-<!--</head>-->
-<!--<body>-->
+
 <div class="d-flex" id="wrapper">
     <div class="modal" id="modal">
         <div class="modal-window">
@@ -49,30 +39,33 @@
                 </a>
             </li>
             <li class="nav-item item">
-                <a href="" role="button" class="nav-link btn d-flex align-items-center dropdown-toggle active"
-                   data-bs-toggle="dropdown" aria-expanded="false">
+                <button href="#" role="button" id="button"
+                        class="nav-link btn d-flex align-items-center dropdown-toggle active"
+                        data-bs-toggle="dropdown">
                     Категории
                     <i class="arrow bi bi-chevron-right"></i>
-                </a>
+                </button>
 
-                <ul class="dropdown-menu show">
+                <ul class="dropdown-menu category">
                     <li><a class="dropdown-item active" href="/income">Доходы</a></li>
-                    <li><a class="dropdown-item" href="#">Расходы</a></li>
+                    <li><a class="dropdown-item" href="/expenses">Расходы</a></li>
                 </ul>
             </li>
         </ul>
 
-        <div class="balance mt-auto text-center">
-            Баланс:
-            500$
+        <div class="balance mt-auto">
+            Баланс: <span id="balance"></span>
         </div>
         <hr>
         <div class="user">
-            <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none"
-               data-bs-toggle="dropdown" aria-expanded="false">
+            <a href="javascript:void(0)" type="button"
+               class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
                 <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <span>Sergey Isaev</span>
+                <span id="user-info"></span>
             </a>
+            <ul class="dropdown-menu" id="dropdown-menu">
+                <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+            </ul>
         </div>
     </div>
     <div class="main">
@@ -86,12 +79,3 @@
     </div>
 </div>
 
-<!--<script src="../components/chart-pie.js"></script>-->
-<!--<script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>-->
-<!--<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>-->
-<!--<script src="../../node_modules/jquery/dist/jquery.min.js"></script>-->
-<!--<script type="module" src="../../node_modules/chart.js/dist/chart.umd.min.js"></script>-->
-
-
-<!--</body>-->
-<!--</html>-->

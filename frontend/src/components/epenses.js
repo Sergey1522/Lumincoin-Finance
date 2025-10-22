@@ -3,7 +3,7 @@ import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
 
 
-export class Income {
+export class Expenses {
     constructor() {
 
         this.getInfoUser = Auth.getUserInfo();
@@ -12,7 +12,7 @@ export class Income {
         this.getInfoRefreshToken = localStorage.getItem(Auth.refreshTokenKey);
         this.showUser();
         if (this.getInfoUserTokens) {
-            this.initIncome();
+            this.initExpenses();
             this.initBalance();
         }
 
@@ -35,31 +35,30 @@ export class Income {
         }
     }
 
-    async initIncome() {
+    async initExpenses() {
         if (this.getInfoUserTokens) {
             try {
-                const result = await CustomHttp.request(config.host + '/categories/income');
+                const result = await CustomHttp.request(config.host + '/categories/expense');
                 if (result.length === 0 || !result) {
                     // this.initIncome().then();
                     return;
                 } else if (result || result.id || result.title) {
                     Auth.setIncome(result);
-                    const createIncome = document.getElementById('income-action');
+                    const createExpenses = document.getElementById('expenses-action');
 
                     for (let i = 0; i < result.length; i++) {
-                        const createNewIncome = document.createElement('div');
-                        createNewIncome.classList.add('income-action');
-                        createNewIncome.setAttribute('id', result[i].id);
-                        createNewIncome.innerHTML = '<div class="income-action-title">' + result[i].title + '</div>' +
-                            '<div class="income-action-btn d-flex gap-4">' +
+                        const createNewExpenses = document.createElement('div');
+                        createNewExpenses.classList.add('expenses-action');
+                        createNewExpenses.setAttribute('id', result[i].id);
+                        createNewExpenses.innerHTML = '<div class="expenses-action-title">' + result[i].title + '</div>' +
+                            '<div class="expenses-action-btn d-flex gap-4">' +
                             '<button role="link" class="btn btn-primary" id="update">Редактировать</button>' +
                             '<button role="link" class="btn btn-danger" id="delete">Удалить</button>' +
                             '</div>'
                         console.log(result[i]);
-                        createIncome.appendChild(createNewIncome);
+                        createExpenses.appendChild(createNewExpenses);
                     }
                 }
-                console.log(result);
 
                 const btnDelete = document.querySelectorAll("#delete");
                 const btnUpdate = document.querySelectorAll("#update");
@@ -69,7 +68,7 @@ export class Income {
                         if (e.target.id === 'delete') {
                             console.log(e.target)
                             console.log(result[i].id)
-                            this.showModalIncome(result[i].id);
+                            this.showModalExpenses(result[i].id);
                         }
                     })
                 }
@@ -78,7 +77,7 @@ export class Income {
                         if (e.target.id === 'update') {
                             Auth.setUpdateIncomeId(result[i].id);
                             console.log(result[i].id)
-                            location.href = '/update-income';
+                            location.href = '/update-expenses';
 
                         }
                     })
@@ -94,8 +93,8 @@ export class Income {
     }
 
 
-    showModalIncome(id) {
-        console.log(id)
+    showModalExpenses(id) {
+
         const modal = document.getElementById('modal');
         modal.style.display = 'block';
         const that = this
@@ -103,7 +102,7 @@ export class Income {
             if (e.target.id.includes('yes')) {
                 that.deleteIncome(id).then();
                 Auth.removeIncome();
-                location.href = '/income';
+                location.href = '/expenses';
 
             } else if (e.target.id.includes('no')) {
 
@@ -118,7 +117,7 @@ export class Income {
 
     async deleteIncome(id) {
         if (this.getInfoRefreshToken) {
-            await CustomHttp.request(config.host + '/categories/income/' + id, 'DELETE');
+            await CustomHttp.request(config.host + '/categories/expense/' + id, 'DELETE');
         }
 
     }

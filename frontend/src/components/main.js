@@ -6,24 +6,25 @@ import {config} from "../../config/config";
 
 export class Main {
     constructor() {
+        this.btnCategoryElement = document.getElementById('button-category');
+        this.listCategoryElement = document.getElementById('category');
+        this.arrowCategoryElement = document.getElementById('arrow');
+
+
         this.getInfoAccessToken = localStorage.getItem(Auth.accessTokenKey);
         this.getInfoRefreshToken = localStorage.getItem(Auth.refreshTokenKey);
         this.getInfoUser = Auth.getUserInfo();
         this.getInfoUserTokens = Auth.getTokens();
         if (this.getInfoUserTokens) {
-            this.initBalance().then();
-            this.initMain();
+            this.initBalance();
+            this.showUser();
             this.initChartJs();
         }
         console.log(this.getInfoUser)
         console.log(this.getInfoUserTokens)
 
-
-
-
-
     }
-   async initBalance() {
+    async initBalance() {
         if (this.getInfoRefreshToken) {
             const result = await CustomHttp.request(config.host + '/balance');
             if (result) {
@@ -31,10 +32,22 @@ export class Main {
             }
         }
     }
-    initMain() {
+
+    showUser() {
         if (this.getInfoUser.name || this.getInfoUser.lastName) {
             document.getElementById('user-info').innerHTML = this.getInfoUser.name + ' ' + this.getInfoUser.lastName;
         }
+        this.btnCategoryElement.addEventListener('click', (e) => {
+
+            if (e.target.getAttribute('aria-expanded') === 'true') {
+                console.log(1)
+                this.btnCategoryElement.classList.add('active');
+                this.arrowCategoryElement.style.transform = 'rotate(90deg)';
+            }
+
+        });
+
+
 
 
 

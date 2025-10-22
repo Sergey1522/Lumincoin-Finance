@@ -4,6 +4,9 @@ import {Main} from "./components/main";
 import {Auth} from "./services/auth";
 import {Income} from "./components/income";
 import {CreateIncome} from "./components/create-income";
+import {UpdateIncome} from "./components/update-income";
+import {Expenses} from "./components/epenses";
+import {CreateExpenses} from "./components/create-expenses";
 
 export class Router {
     constructor() {
@@ -36,11 +39,48 @@ export class Router {
             },
             {
                 route: "/create-income",
-                title: "Доходы",
+                title: "Создание категории доходов",
                 template: "/templates/create-income.html",
                 styles: "create-income.css",
                 load: () => {
                     new CreateIncome();
+
+                },
+            },
+            {
+                route: "/update-income",
+                title: "Редактирование категории доходов",
+                template: "/templates/update-income.html",
+                styles: "update-income.css",
+                load: () => {
+                    new UpdateIncome();
+                },
+            },
+            {
+                route: "/expenses",
+                title: "Расходы",
+                template: "/templates/expenses.html",
+                styles: "expenses.css",
+                load: () => {
+                    new Expenses();
+
+                },
+            },
+            {
+                route: "/create-expenses",
+                title: "Создание категории расходов",
+                template: "/templates/create-expenses.html",
+                styles: "create-expenses.css",
+                load: () => {
+                    new CreateExpenses();
+                },
+            },
+            {
+                route: "/update-expenses",
+                title: "Редактирование категории расходов",
+                template: "/templates/update-expenses.html",
+                styles: "update-expenses.css",
+                load: () => {
 
                 },
             },

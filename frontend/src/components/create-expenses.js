@@ -4,19 +4,20 @@ import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
 
 
-export class CreateIncome {
+export class CreateExpenses {
     constructor() {
-        this.addNewIncomeElement = document.getElementById("create-income");
-        this.buttonCreateElement = document.getElementById("create");
+        this.addNewExpensesElement = document.getElementById("create-expenses");
+        this.buttonCreateExpensesElement = document.getElementById("create");
         this.userInfoElement = document.getElementById("user-info");
 
         this.getInfoUser = Auth.getUserInfo();
         this.getInfoUserTokens = Auth.getTokens();
         this.getInfoRefreshToken = localStorage.getItem(Auth.refreshTokenKey);
         this.showUser();
+        this.initBalance();
         if (this.getInfoUserTokens) {
-            this.buttonCreateElement.addEventListener("click",  () => {
-                this.newCreateIncome();
+            this.buttonCreateExpensesElement.addEventListener("click",  () => {
+                this.newCreateExpenses();
             });
 
 
@@ -31,32 +32,26 @@ export class CreateIncome {
             this.userInfoElement.innerHTML = this.getInfoUser.name + ' ' + this.getInfoUser.lastName;
         }
     }
-    async newCreateIncome() {
+    async newCreateExpenses() {
         if (this.getInfoUserTokens) {
             try {
-                const result = await CustomHttp.request(config.host + '/categories/income', 'POST', {
-                    title: this.addNewIncomeElement.value,
+                const result = await CustomHttp.request(config.host + '/categories/expense', 'POST', {
+                    title: this.addNewExpensesElement.value,
                 });
                 console.log(result);
                 if (result || result.title || result.id) {
                     Auth.setIncome(result);
 
                 }
-                location.href = '/income';
+                location.href = '/expenses';
 
 
             }catch (e) {
                 console.log(e);
             }
-
         }
-
     }
-    // addNewIncome(income) {
-    //     this.buttonAddNewElement.addEventListener("click", async () => {
-    //         const result = await CustomHttp.request(config.host + '/categories/income');
-    //     })
-    // }
+
    async initBalance() {
         if (this.getInfoRefreshToken ) {
             const result = await CustomHttp.request(config.host + '/balance');

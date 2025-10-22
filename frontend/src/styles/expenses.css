@@ -1,7 +1,7 @@
-.income-actions {
+.expenses-actions {
     margin-top: 40px;
 }
-.income-action {
+.expenses-action {
     border: 1px solid #ced4da;
     border-radius: 12px;
     width: 352px;
@@ -9,12 +9,12 @@
     padding: 20px;
     line-height: 1;
 }
-.income-action a {
+.expenses-action a {
     font-weight: 500;
     font-size: 28px;
     color: #ced4da;
 }
-.income-action-title {
+.expenses-action-title {
     font-weight: 500;
     font-size: 28px;
     color: #290661;

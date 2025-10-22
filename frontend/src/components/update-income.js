@@ -4,26 +4,25 @@ import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
 
 
-export class CreateIncome {
+export class UpdateIncome {
     constructor() {
-        this.addNewIncomeElement = document.getElementById("create-income");
-        this.buttonCreateElement = document.getElementById("create");
+        this.updateIncomeElement = document.getElementById("update-income");
+        this.buttonUpdateElement = document.getElementById("save");
         this.userInfoElement = document.getElementById("user-info");
 
         this.getInfoUser = Auth.getUserInfo();
+        this.getUpdateIncomeId = Auth.getUpdateIncomeId();
+        this.getInfoIncome = Auth.getIncome();
         this.getInfoUserTokens = Auth.getTokens();
         this.getInfoRefreshToken = localStorage.getItem(Auth.refreshTokenKey);
         this.showUser();
         if (this.getInfoUserTokens) {
-            this.buttonCreateElement.addEventListener("click",  () => {
-                this.newCreateIncome();
+            this.buttonUpdateElement.addEventListener("click",  () => {
+                this.newUpdateIncome().then();
             });
 
-
-
-
         }
-        console.log()
+        console.log(this.getUpdateIncomeId)
         console.log(this.getInfoUserTokens)
     }
     showUser() {
@@ -31,11 +30,11 @@ export class CreateIncome {
             this.userInfoElement.innerHTML = this.getInfoUser.name + ' ' + this.getInfoUser.lastName;
         }
     }
-    async newCreateIncome() {
+    async newUpdateIncome() {
         if (this.getInfoUserTokens) {
             try {
-                const result = await CustomHttp.request(config.host + '/categories/income', 'POST', {
-                    title: this.addNewIncomeElement.value,
+                const result = await CustomHttp.request(config.host + '/categories/income/' + this.getUpdateIncomeId, 'PUT', {
+                    title: this.updateIncomeElement.value,
                 });
                 console.log(result);
                 if (result || result.title || result.id) {

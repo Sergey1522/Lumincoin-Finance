@@ -63,28 +63,30 @@
             </li>
         </ul>
 
-        <div class="balance mt-auto text-center">
-            Баланс:
-            <span>500$</span>
+        <div class="balance mt-auto">
+            Баланс: <span id="balance"></span>
         </div>
         <hr>
         <div class="user">
-            <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none"
-               data-bs-toggle="dropdown" aria-expanded="false">
+            <a href="javascript:void(0)" type="button"
+               class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
                 <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <span>Sergey Isaev</span>
+                <span id="user-info"></span>
             </a>
+            <ul class="dropdown-menu" id="dropdown-menu">
+                <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+            </ul>
         </div>
     </div>
     <div class="main">
         <div class="container-text">Создание категории расходов</div>
         <div class="expenses-create">
             <div class="expenses-input">
-                <input class="form-control" type="text" name="expenses" id="expenses" placeholder="Название...">
+                <input class="form-control" type="text" name="create-expenses" id="create-expenses" placeholder="Название...">
             </div>
             <div class="expenses-btn d-flex gap-4">
-                <button type="button" class="btn btn-success">Создать</button>
-                <button type="button" class="btn btn-danger">Отмена</button>
+                <button type="button" class="btn btn-success" id="create">Создать</button>
+                <button type="button" class="btn btn-danger" id="cancel">Отмена</button>
             </div>
         </div>
 

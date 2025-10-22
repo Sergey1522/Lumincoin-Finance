@@ -6,6 +6,7 @@ export class Auth {
     static refreshTokenKey = 'refreshToken';
     static userInfoKey = 'userInfo';
     static newIncomeKey = 'newIncome';
+    static idIncomeKey = 'id';
 
     static async processUnauthorizedResponse() {
         const refreshToken = localStorage.getItem(this.refreshTokenKey);
@@ -68,8 +69,21 @@ export class Auth {
     static setIncome(income) {
         localStorage.setItem(this.newIncomeKey, JSON.stringify(income));
     }
+    static getIncome() {
+        const incomeInfo = localStorage.getItem(this.newIncomeKey);
+        if (incomeInfo) {
+            return JSON.parse(incomeInfo)
+        }
+        return null;
+    }
     static removeIncome() {
         return localStorage.removeItem(this.newIncomeKey);
+    }
+    static setUpdateIncomeId(id) {
+        localStorage.setItem(this.idIncomeKey, id);
+    }
+    static getUpdateIncomeId() {
+        return localStorage.getItem(this.idIncomeKey);
     }
 
 }
