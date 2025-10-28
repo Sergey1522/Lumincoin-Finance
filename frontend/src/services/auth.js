@@ -6,7 +6,11 @@ export class Auth {
     static refreshTokenKey = 'refreshToken';
     static userInfoKey = 'userInfo';
     static newIncomeKey = 'newIncome';
+    static newExpensesKey = 'newExpenses';
     static idIncomeKey = 'id';
+    static titleIncomeKey = 'titleIncome';
+    static titleExpensesKey = 'titleExpenses';
+    static idExpensesKey = 'id';
 
     static async processUnauthorizedResponse() {
         const refreshToken = localStorage.getItem(this.refreshTokenKey);
@@ -79,11 +83,52 @@ export class Auth {
     static removeIncome() {
         return localStorage.removeItem(this.newIncomeKey);
     }
+
+
+
     static setUpdateIncomeId(id) {
         localStorage.setItem(this.idIncomeKey, id);
+    }
+    static setUpdateIncomeTitle(titleIncome) {
+        localStorage.setItem(this.titleIncomeKey, titleIncome);
     }
     static getUpdateIncomeId() {
         return localStorage.getItem(this.idIncomeKey);
     }
+    static getUpdateIncomeTitle() {
+        return localStorage.getItem(this.titleIncomeKey);
+    }
+
+
+    static setExpenses(expenses) {
+        localStorage.setItem(this.newExpensesKey, JSON.stringify(expenses));
+    }
+    static getExpenses() {
+        const expensesInfo = localStorage.getItem(this.newExpensesKey);
+        if (expensesInfo) {
+            return JSON.parse(expensesInfo)
+        }
+        return null;
+    }
+    static removeExpenses() {
+        return localStorage.removeItem(this.newExpensesKey);
+    }
+
+
+
+
+    static setUpdateExpensesId(id) {
+        localStorage.setItem(this.idExpensesKey, id);
+    }
+    static getUpdateExpensesId() {
+        return localStorage.getItem(this.idExpensesKey);
+    }
+    static setUpdateExpensesTitle(titleExpenses) {
+        localStorage.setItem(this.titleExpensesKey, titleExpenses);
+    }
+    static getUpdateExpensesTitle() {
+        return localStorage.getItem(this.titleExpensesKey);
+    }
+
 
 }

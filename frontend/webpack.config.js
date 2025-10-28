@@ -18,6 +18,18 @@ module.exports = {
         port: 9001,
         historyApiFallback: true,
     },
+    module: {
+        rules: [
+            {
+                test: /\.css$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'css/[name][ext]'
+                },
+
+            }
+        ]
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './index.html',

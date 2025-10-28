@@ -7,29 +7,42 @@ import {config} from "../../config/config";
 export class UpdateIncome {
     constructor() {
         this.updateIncomeElement = document.getElementById("update-income");
-        this.buttonUpdateElement = document.getElementById("save");
+        this.buttonUpdateSaveElement = document.getElementById("save");
+        this.buttonUpdateNotSaveElement = document.getElementById("not-save");
         this.userInfoElement = document.getElementById("user-info");
+        this.updateIncomeElement.value = Auth.getUpdateIncomeTitle();
 
         this.getInfoUser = Auth.getUserInfo();
         this.getUpdateIncomeId = Auth.getUpdateIncomeId();
-        this.getInfoIncome = Auth.getIncome();
         this.getInfoUserTokens = Auth.getTokens();
         this.getInfoRefreshToken = localStorage.getItem(Auth.refreshTokenKey);
+        this.getInfoIncome = Auth.getIncome();
         this.showUser();
-        if (this.getInfoUserTokens) {
-            this.buttonUpdateElement.addEventListener("click",  () => {
-                this.newUpdateIncome().then();
-            });
-
-        }
-        console.log(this.getUpdateIncomeId)
-        console.log(this.getInfoUserTokens)
+        this.initBalance();
+        this.saveUpdateIncome();
+        this.notSaveUpdateIncome();
+        console.log(Auth.getUpdateIncomeTitle())
     }
     showUser() {
         if (this.getInfoUser.name || this.getInfoUser.lastName) {
             this.userInfoElement.innerHTML = this.getInfoUser.name + ' ' + this.getInfoUser.lastName;
         }
     }
+    saveUpdateIncome() {
+        if (this.getInfoRefreshToken) {
+            this.buttonUpdateNotSaveElement.addEventListener("click",  () => {
+                location.href = '/income';
+            });
+        }
+    }
+    notSaveUpdateIncome() {
+        if (this.getInfoRefreshToken) {
+            this.buttonUpdateSaveElement.addEventListener("click",  () => {
+                this.newUpdateIncome().then();
+            });
+        }
+    }
+
     async newUpdateIncome() {
         if (this.getInfoUserTokens) {
             try {
@@ -51,11 +64,7 @@ export class UpdateIncome {
         }
 
     }
-    // addNewIncome(income) {
-    //     this.buttonAddNewElement.addEventListener("click", async () => {
-    //         const result = await CustomHttp.request(config.host + '/categories/income');
-    //     })
-    // }
+
    async initBalance() {
         if (this.getInfoRefreshToken ) {
             const result = await CustomHttp.request(config.host + '/balance');

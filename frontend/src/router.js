@@ -5,8 +5,11 @@ import {Auth} from "./services/auth";
 import {Income} from "./components/income";
 import {CreateIncome} from "./components/create-income";
 import {UpdateIncome} from "./components/update-income";
-import {Expenses} from "./components/epenses";
+import {Expenses} from "./components/expenses";
 import {CreateExpenses} from "./components/create-expenses";
+import {UpdateExpenses} from "./components/update-expenses";
+import {IncomeExpenses} from "./components/income-expenses";
+import {Logout} from "./components/logout";
 
 export class Router {
     constructor() {
@@ -81,6 +84,17 @@ export class Router {
                 template: "/templates/update-expenses.html",
                 styles: "update-expenses.css",
                 load: () => {
+                    new UpdateExpenses();
+
+                },
+            },
+            {
+                route: "/income-expenses",
+                title: "Редактирование категории расходов",
+                template: "/templates/income-expenses.html",
+                styles: "income-expenses.css",
+                load: () => {
+                    new IncomeExpenses();
 
                 },
             },
@@ -103,6 +117,14 @@ export class Router {
                     new Login();
                 },
             },
+            {
+                route: '/logout',
+                load: () => {
+                    new Logout();
+
+                }
+            },
+
         ];
     }
     initEvent() {

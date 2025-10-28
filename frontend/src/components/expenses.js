@@ -40,10 +40,9 @@ export class Expenses {
             try {
                 const result = await CustomHttp.request(config.host + '/categories/expense');
                 if (result.length === 0 || !result) {
-                    // this.initIncome().then();
                     return;
                 } else if (result || result.id || result.title) {
-                    Auth.setIncome(result);
+                    Auth.setExpenses(result);
                     const createExpenses = document.getElementById('expenses-action');
 
                     for (let i = 0; i < result.length; i++) {
@@ -75,7 +74,8 @@ export class Expenses {
                 for (let i = 0; i < btnUpdate.length; i++) {
                     btnUpdate[i].addEventListener('click', (e) => {
                         if (e.target.id === 'update') {
-                            Auth.setUpdateIncomeId(result[i].id);
+                            Auth.setUpdateExpensesId(result[i].id);
+                            Auth.setUpdateExpensesTitle(result[i].title);
                             console.log(result[i].id)
                             location.href = '/update-expenses';
 

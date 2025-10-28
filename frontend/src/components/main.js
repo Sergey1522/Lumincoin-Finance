@@ -2,6 +2,7 @@ import {Auth} from "../services/auth";
 import {Chart} from "chart.js/auto";
 import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
+import {Logout} from "./logout";
 
 
 export class Main {
@@ -9,6 +10,7 @@ export class Main {
         this.btnCategoryElement = document.getElementById('button-category');
         this.listCategoryElement = document.getElementById('category');
         this.arrowCategoryElement = document.getElementById('arrow');
+        this.logoutElement = document.getElementById('logout');
 
 
         this.getInfoAccessToken = localStorage.getItem(Auth.accessTokenKey);
@@ -20,6 +22,7 @@ export class Main {
             this.showUser();
             this.initChartJs();
         }
+
         console.log(this.getInfoUser)
         console.log(this.getInfoUserTokens)
 
@@ -46,12 +49,8 @@ export class Main {
             }
 
         });
-
-
-
-
-
     }
+
     initChartJs() {
         const ctx = document.getElementById("myChart");
         const ctx_2 = document.getElementById("myChart_2");

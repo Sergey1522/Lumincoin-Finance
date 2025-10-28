@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
-    <!--    <link rel="stylesheet" href="../../node_modules/fastbootstrap/dist/css/fastbootstrap.css">-->
 
-    <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!--    <link rel="stylesheet" href="../styles/main.css">-->
-    <link rel="stylesheet" href="../styles/income-expenses.css">
-    <link rel="stylesheet" href="../styles/common.css">
-    <title>Доходы & Расходы</title>
-</head>
-<body>
 <div class="d-flex" id="wrapper">
     <!-- Sidebar-->
     <div class="sidebar d-flex flex-column flex-shrink-0  border-end">
@@ -28,42 +14,47 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item item">
-                <a href="#" class="nav-link" aria-current="true">
+                <a href="/" class="nav-link active" aria-current="true">
                     <i class="bi bi-house"></i>
                     Главная
                 </a>
             </li>
             <li class="nav-item item">
-                <a href="#" class="nav-link active">
+                <a href="/income-expenses" class="nav-link ">
                     <i class="bi bi-cash-coin"></i>
                     Доходы & Расходы
                 </a>
             </li>
             <li class="nav-item item">
-                <a href="" role="button" class="nav-link btn d-flex align-items-center dropdown-toggle"
-                   data-bs-toggle="dropdown" aria-expanded="false">
-                    Категории
-                    <i class="arrow bi bi-chevron-right"></i>
-                </a>
 
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Доходы</a></li>
-                    <li><a class="dropdown-item" href="#">Расходы</a></li>
+                <button href="#" role="button" id="button-category"
+                        class="nav-link btn d-flex align-items-center dropdown-toggle"
+                        data-bs-toggle="dropdown">
+                    Категории
+                    <i class="arrow bi bi-chevron-right" id="arrow"></i>
+                </button>
+
+                <ul class="dropdown-menu category" id="category">
+                    <li><a class="dropdown-item" href="/income">Доходы</a></li>
+                    <li><a class="dropdown-item" href="/expenses">Расходы</a></li>
                 </ul>
+
             </li>
         </ul>
 
-        <div class="balance mt-auto text-center">
-            Баланс:
-            500$
+        <div class="balance mt-auto">
+            Баланс: <span id="balance"></span>
         </div>
         <hr>
         <div class="user">
-            <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none"
-               data-bs-toggle="dropdown" aria-expanded="false">
+            <a href="javascript:void(0)" type="button"
+               class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
                 <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <span>Sergey Isaev</span>
+                <span id="user-info"></span>
             </a>
+            <ul class="dropdown-menu" id="dropdown-menu">
+                <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+            </ul>
         </div>
     </div>
     <div class="main w-100">
@@ -80,8 +71,18 @@
                 <button type="button" class="btn-actions btn btn-outline-secondary">Год</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Все</button>
                 <button type="button" class="btn-actions btn btn-outline-secondary">Интервал</button>
-                <!--                <input type="date" class="form-control" id="date" name="date" placeholder="Дата" required>-->
-                <!--                <label for="date"><a href="">Дата</a></label>-->
+                <div class="date-wrapper d-flex">
+                    <div class="date-content">
+                        <b>c</b>
+                        <input type="date" name="date" class="real-date" id="from-date">
+                        <span class="fake-date">Дата</span>
+                    </div>
+                    <div class="date-content">
+                        <b>до</b>
+                        <input type="date" name="date" class="real-date" id="before-date">
+                        <span class="fake-date">Дата</span>
+                    </div>
+                </div>
             </div>
             <div class="container">
             <table class="table w-100">
@@ -96,39 +97,30 @@
                     <th scope="col"></th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <th scope="row" class="text-center">1</th>
-                    <td class="text-success text-center">доход</td>
-                    <td class="text-center">зарплата</td>
-                    <td class="text-center">500$</td>
-                    <td class="text-center">11.09.2022</td>
-                    <td class="text-center"></td>
-                    <td class="text-center"><a href=""><i class="bi bi-trash"></i></a>
-                        <a href=""><i class="bi bi-pencil"></i></a></td>
-                </tr>
-                <tr>
-                    <th scope="row" class="text-center">2</th>
-                    <td class="text-danger text-center">расход</td>
-                    <td class="text-center">жильё</td>
-                    <td class="text-center">2 500$</td>
-                    <td class="text-center">12.09.2022</td>
-                    <td class="text-center"></td>
-                    <td class="text-center"><a href=""><i class="bi bi-trash"></i></a>
-                        <a href=""><i class="bi bi-pencil"></i></a></td>
-                </tr>
+                <tbody id="records">
+<!--                <tr>-->
+<!--                    <th scope="row" class="text-center">1</th>-->
+<!--                    <td class="text-success text-center">доход</td>-->
+<!--                    <td class="text-center">зарплата</td>-->
+<!--                    <td class="text-center">500$</td>-->
+<!--                    <td class="text-center">11.09.2022</td>-->
+<!--                    <td class="text-center"></td>-->
+<!--                    <td class="text-center"><a href=""><i class="bi bi-trash"></i></a>-->
+<!--                        <a href=""><i class="bi bi-pencil"></i></a></td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th scope="row" class="text-center">2</th>-->
+<!--                    <td class="text-danger text-center">расход</td>-->
+<!--                    <td class="text-center">жильё</td>-->
+<!--                    <td class="text-center">2 500$</td>-->
+<!--                    <td class="text-center">12.09.2022</td>-->
+<!--                    <td class="text-center"></td>-->
+<!--                    <td class="text-center"><a href=""><i class="bi bi-trash"></i></a>-->
+<!--                        <a href=""><i class="bi bi-pencil"></i></a></td>-->
+<!--                </tr>-->
                 </tbody>
             </table>
             </div>
         </div>
     </div>
 </div>
-<script src="../components/chart-pie.js"></script>
-<script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-<script type="module" src="../../node_modules/chart.js/dist/chart.umd.min.js"></script>
-
-
-</body>
-</html>

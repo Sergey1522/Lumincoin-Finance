@@ -28,13 +28,13 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item item">
-                <a href="#" class="nav-link" role="button" aria-current="true">
+                <a href="/" class="nav-link" role="button" aria-current="true">
                     <i class="bi bi-house"></i>
                     Главная
                 </a>
             </li>
             <li class="nav-item item">
-                <a href="#" class="nav-link" role="link">
+                <a href="/income-expenses" class="nav-link" role="link">
                     <i class="bi bi-cash-coin"></i>
                     Доходы & Расходы
                 </a>
@@ -48,8 +48,8 @@
                 </button>
 
                 <ul class="dropdown-menu show category">
-                    <li><a class="dropdown-item active" href="#">Доходы</a></li>
-                    <li><a class="dropdown-item" href="#">Расходы</a></li>
+                    <li><a class="dropdown-item active" href="/income">Доходы</a></li>
+                    <li><a class="dropdown-item" href="/expenses">Расходы</a></li>
                 </ul>
             </li>
         </ul>
@@ -73,7 +73,7 @@
         <div class="container-text">Редактирование категории доходов</div>
         <div class="update-create">
             <div class="update-input">
-                <input class="form-control" type="text" name="income" id="update-income" placeholder="Зарплата">
+                <input class="form-control" type="text" name="income" id="update-income" value="" placeholder="Зарплата">
             </div>
             <div class="update-btn d-flex gap-4">
                 <button type="button" class="btn btn-success" id="save">Сохранить</button>

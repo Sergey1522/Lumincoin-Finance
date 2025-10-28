@@ -16,8 +16,6 @@ export class Income {
             this.initBalance();
         }
 
-        console.log(this.userInfoElement)
-        console.log(this.getInfoUserTokens)
     }
     showUser() {
         if (this.getInfoUser.name || this.getInfoUser.lastName) {
@@ -59,7 +57,6 @@ export class Income {
                         createIncome.appendChild(createNewIncome);
                     }
                 }
-                console.log(result);
 
                 const btnDelete = document.querySelectorAll("#delete");
                 const btnUpdate = document.querySelectorAll("#update");
@@ -69,6 +66,7 @@ export class Income {
                         if (e.target.id === 'delete') {
                             console.log(e.target)
                             console.log(result[i].id)
+                            console.log(result[i].title)
                             this.showModalIncome(result[i].id);
                         }
                     })
@@ -77,7 +75,8 @@ export class Income {
                     btnUpdate[i].addEventListener('click', (e) => {
                         if (e.target.id === 'update') {
                             Auth.setUpdateIncomeId(result[i].id);
-                            console.log(result[i].id)
+                            Auth.setUpdateIncomeTitle(result[i].title);
+
                             location.href = '/update-income';
 
                         }
