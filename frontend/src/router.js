@@ -10,6 +10,7 @@ import {CreateExpenses} from "./components/create-expenses";
 import {UpdateExpenses} from "./components/update-expenses";
 import {IncomeExpenses} from "./components/income-expenses";
 import {Logout} from "./components/logout";
+import {CreateIncomeExpense} from "./components/create-income-expenses";
 
 export class Router {
     constructor() {
@@ -95,6 +96,16 @@ export class Router {
                 styles: "income-expenses.css",
                 load: () => {
                     new IncomeExpenses();
+
+                },
+            },
+            {
+                route: "/create-income-expenses",
+                title: "Создание дохода/расхода",
+                template: "/templates/create-income-expenses.html",
+                styles: "create-income-expenses.css",
+                load: () => {
+                  new CreateIncomeExpense();
 
                 },
             },

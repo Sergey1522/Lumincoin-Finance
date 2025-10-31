@@ -11,6 +11,7 @@ export class Auth {
     static titleIncomeKey = 'titleIncome';
     static titleExpensesKey = 'titleExpenses';
     static idExpensesKey = 'id';
+    static typeTitle = 'typeTitle';
 
     static async processUnauthorizedResponse() {
         const refreshToken = localStorage.getItem(this.refreshTokenKey);
@@ -128,6 +129,13 @@ export class Auth {
     }
     static getUpdateExpensesTitle() {
         return localStorage.getItem(this.titleExpensesKey);
+    }
+
+    static setTypeTitleIncomeExpenses(typeTitle) {
+        localStorage.setItem(this.typeTitle, typeTitle);
+    }
+    static getTypeTitleIncomeExpenses() {
+        return localStorage.getItem(this.typeTitle);
     }
 
 

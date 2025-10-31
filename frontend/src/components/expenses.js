@@ -101,7 +101,7 @@ export class Expenses {
         modal.addEventListener('click', function (e) {
             if (e.target.id.includes('yes')) {
                 that.deleteIncome(id).then();
-                Auth.removeIncome();
+                Auth.removeExpenses();
                 location.href = '/expenses';
 
             } else if (e.target.id.includes('no')) {
