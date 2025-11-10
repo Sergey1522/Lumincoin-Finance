@@ -94,7 +94,6 @@ export class Income {
 
 
     showModalIncome(id) {
-        console.log(id)
         const modal = document.getElementById('modal');
         modal.style.display = 'block';
         const that = this
@@ -106,10 +105,9 @@ export class Income {
 
             } else if (e.target.id.includes('no')) {
 
-                console.log('no');
                 return modal.style.display = 'none';
             }
-            console.log(e.target.title);
+
         })
 
     }

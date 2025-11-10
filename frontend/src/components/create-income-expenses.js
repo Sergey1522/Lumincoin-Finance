@@ -1,97 +1,118 @@
 import {Auth} from "../services/auth";
 import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
+import {IncomeExpenses} from "./income-expenses";
+import {isNumber} from "chart.js/helpers";
 
 export class CreateIncomeExpense {
     constructor() {
-        this.datalistOptions = document.getElementById('datalistOptions');
+        this.formSelectCategory = document.getElementById('form-select-category');
+        this.userInfoElement = document.getElementById("user-info");
 
         this.inputTypeElement = document.getElementById('type');
         this.inputIdCategoryElement = document.getElementById('category');
         this.amountCategoryElement = document.getElementById('amount');
         this.dateCategoryElement = document.getElementById('date');
         this.commentsCategoryElement = document.getElementById('comments');
-
         this.btnCreateElement = document.getElementById('create');
-        this.idChooseCategoryElement = null;
 
 
         this.myCreateIncome = Auth.getIncome();
+        this.getInfoUser = Auth.getUserInfo();
         this.getInfoRefreshToken = localStorage.getItem(Auth.refreshTokenKey);
         this.myCreateExpenses = Auth.getExpenses();
         this.typeTitle = Auth.getTypeTitleIncomeExpenses()
+        this.optionCategory = null;
+        this.showUser();
+        this.initBalance();
 
 
 
         if (this.typeTitle === 'create-income') {
             this.chooseMyIncome(this.myCreateIncome);
-            this.inputTypeElement.value = 'Доход'
+            this.inputTypeElement.value = 'income'
         }
         if (this.typeTitle === 'create-expense') {
             this.chooseMyExpenses( this.myCreateExpenses );
-            this.inputTypeElement.value = 'Расход'
+            this.inputTypeElement.value = 'expense'
         }
+        this.formSelectCategory.addEventListener('change', (event) => {
+            this.optionCategory = event.target.value;
+        })
+
         this.btnCreateElement.addEventListener('click', (e) => {
             // e.preventDefault();
 
-            this.getIdTitle(this.myCreateIncome);
-            this.initCreate();
+            // this.getIdTitle(this.myCreateIncome);
+            this.initCreate(this.myCreateIncome);
             console.log(this.inputTypeElement.value);
-
-
-
+            console.log(this.optionCategory );
         })
 
 
 
     }
+    showUser() {
+        if (this.getInfoUser.name || this.getInfoUser.lastName) {
+            this.userInfoElement.innerHTML = this.getInfoUser.name + ' ' + this.getInfoUser.lastName;
+        }
+    }
+    async initBalance() {
+        if (this.getInfoRefreshToken) {
+            const result = await CustomHttp.request(config.host + '/balance');
+            if (result) {
+                document.getElementById('balance').innerHTML = result.balance + '' + '$';
+            }
+        }
+    }
 
 
 
     chooseMyIncome(incomes) {
-        if (incomes.length > 0) {
+        if (incomes) {
             incomes.forEach(income => {
                 const options = document.createElement("option");
-                options.setAttribute('value', income.title);
+                options.setAttribute('value', income.id);
+                options.textContent = income.title;
                 console.log(income.title);
-                this.datalistOptions.appendChild(options);
+                this.formSelectCategory.appendChild(options);
             })
         }else {
-            return null;
+            return incomes ;
         }
 
 
     }
     chooseMyExpenses(expenses) {
-        if (expenses.length > 0) {
+        if (expenses) {
             expenses.forEach(expense => {
                 const options = document.createElement("option");
-                options.setAttribute('value', expense.title);
-                console.log(expense.title);
-                this.datalistOptions.appendChild(options);
+                options.setAttribute('value', expense.id);
+                options.textContent = expense.title;
+                this.formSelectCategory.appendChild(options);
             })
         }else {
-            return null;
+            return expenses;
         }
     }
 
-    getIdTitle(data) {
-        const item = data.find(obj => obj.title === this.inputIdCategoryElement.value);
-        const id = item ? item.id : null;
-        this.inputIdCategoryElement.value = id;
-        console.log(this.inputIdCategoryElement.value)
-    }
    async initCreate() {
         if (this.getInfoRefreshToken) {
             const result = await CustomHttp.request(config.host + '/operations', 'POST', {
                 type: this.inputTypeElement.value,
-                amount: this.amountCategoryElement.value,
+                amount: parseInt(this.amountCategoryElement.value),
                 date: this.dateCategoryElement.value,
                 comment: this.commentsCategoryElement.value,
-                category_id: this.inputIdCategoryElement.value,
+                category_id: parseInt(this.optionCategory),
             });
-            console.log(result)
-            console.log(this.inputIdCategoryElement.value)
+         if (result) {
+
+             Auth.setOperationsCategory(result);
+
+             location.href = '/income-expenses';
+         }
+
+
         }
     }
 

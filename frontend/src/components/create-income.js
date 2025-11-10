@@ -80,7 +80,10 @@ export class CreateIncome {
                 });
                 console.log(result);
                 if (result || result.title || result.id) {
-                    Auth.setIncome(result);
+                    for (let i = 0; i < result.length; i++) {
+                        Auth.setIncome(result[i]);
+                    }
+
 
                 }
                 location.href = '/income';
@@ -91,6 +94,7 @@ export class CreateIncome {
             }
 
         }
+
 
     }
 

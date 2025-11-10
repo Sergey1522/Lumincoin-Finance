@@ -12,6 +12,7 @@ export class Auth {
     static titleExpensesKey = 'titleExpenses';
     static idExpensesKey = 'id';
     static typeTitle = 'typeTitle';
+    static resultOperationsCategory = 'resultOperationsCategory';
 
     static async processUnauthorizedResponse() {
         const refreshToken = localStorage.getItem(this.refreshTokenKey);
@@ -137,6 +138,24 @@ export class Auth {
     static getTypeTitleIncomeExpenses() {
         return localStorage.getItem(this.typeTitle);
     }
+
+
+
+
+    static setOperationsCategory(data) {
+        localStorage.setItem(this.resultOperationsCategory, JSON.stringify(data));
+    }
+    static getOperationsCategory() {
+        const resultOperationsCategory = localStorage.getItem(this.resultOperationsCategory);
+        if (resultOperationsCategory) {
+            return JSON.parse(resultOperationsCategory)
+        }
+        return null;
+    }
+    static removeOperationsCategory() {
+        return localStorage.removeItem(this.resultOperationsCategory);
+    }
+
 
 
 }

@@ -11,6 +11,7 @@ import {UpdateExpenses} from "./components/update-expenses";
 import {IncomeExpenses} from "./components/income-expenses";
 import {Logout} from "./components/logout";
 import {CreateIncomeExpense} from "./components/create-income-expenses";
+import {UpdateIncomeExpense} from "./components/update-income-expenses";
 
 export class Router {
     constructor() {
@@ -91,7 +92,7 @@ export class Router {
             },
             {
                 route: "/income-expenses",
-                title: "Редактирование категории расходов",
+                title: "Доходы и расходы",
                 template: "/templates/income-expenses.html",
                 styles: "income-expenses.css",
                 load: () => {
@@ -106,6 +107,16 @@ export class Router {
                 styles: "create-income-expenses.css",
                 load: () => {
                   new CreateIncomeExpense();
+
+                },
+            },
+            {
+                route: "/update-income-expenses",
+                title: "Редактирование дохода/расхода",
+                template: "/templates/update-income-expenses.html",
+                styles: "update-income-expenses.css",
+                load: () => {
+                    new UpdateIncomeExpense();
 
                 },
             },

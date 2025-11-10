@@ -1,19 +1,6 @@
 
 <div class="d-flex" id="wrapper">
-    <div class="modal">
-        <div class="modal-window">
-            <div class="modal-window-content d-flex flex-column align-items-center">
-                <div class="modal-window-title">Вы действительно хотите удалить категорию? Связанные доходы останутся
-                    без
-                    категории.
-                </div>
-                <div class="modal-window-btn d-flex gap-4">
-                    <button type="button" class="btn btn-success">Да, удалить</button>
-                    <button type="button" class="btn btn-danger">Не удалять</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!-- Sidebar-->
     <div class="sidebar d-flex flex-column flex-shrink-0  border-end">
         <a href="/"
@@ -74,12 +61,15 @@
         <div class="income-create">
             <div class="create-input d-flex flex-column gap-3">
                 <input class="form-control" type="text" name="income" id="type" placeholder="Тип...">
-                <input class="form-control" type="text" name="income" id="category" placeholder="Категория..." list="datalistOptions">
-                <datalist id="datalistOptions">
+                <select class="form-select" id="form-select-category" aria-label="Пример выбора по умолчанию">
+                    <option selected>Откройте для выбора категории выбора</option>
+                </select>
+<!--                <input class="form-control" type="text" name="income" id="category" placeholder="Категория..." list="datalistOptions">-->
+<!--                <datalist id="datalistOptions">-->
 
-                </datalist>
+<!--                </datalist>-->
                 <input class="form-control" type="number" name="income" id="amount" placeholder="Сумма в $...">
-                <input class="form-control" type="text" name="income" id="date" placeholder="Дата... ГГГГ-ММ-ДД">
+                <input class="form-control" type="date" name="income" id="date" placeholder="Дата... ГГГГ-ММ-ДД">
                 <input class="form-control" type="text" name="income" id="comments" placeholder="Комментарий...">
             </div>
             <div class="create-btn d-flex gap-4 mt-4">

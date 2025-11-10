@@ -4,13 +4,20 @@ import {config} from "../../config/config";
 
 export class IncomeExpenses {
     constructor() {
+        this.modalElement = document.getElementById('modal');
         this.userInfoElement = document.getElementById("user-info");
         this.fromDateElement = document.getElementById("from-date");
         this.beforeDateElement = document.getElementById("before-date");
         this.btnIntervalElement = document.getElementById("interval");
+        this.allOperationsElement = document.getElementById("all");
         this.actionsBtnElement = document.querySelectorAll('.actions-button a');
+
+
         this.dateFrom = null;
         this.dateTo = null;
+        this.dateFromAll = '1969-10-29';
+        const date = new Date();
+        this.dateToAll = date.toISOString().split('T')[0];
         this.actionsBtnElement.forEach((btn) => {
             btn.addEventListener('click', (e) => {
                 Auth.setTypeTitleIncomeExpenses(e.target.id)
@@ -22,26 +29,93 @@ export class IncomeExpenses {
 
         this.getInfoUser = Auth.getUserInfo();
         this.getInfoRefreshToken = localStorage.getItem(Auth.refreshTokenKey);
-        this.getOperations();
+        this.getOperations(this.dateFromAll,this.dateToAll);
         this.initBalance();
         this.showUser();
         this.getIntervalDate();
+        this.getAllOperations(this.dateFromAll, this.dateToAll);
 
 
+
+    }
+    getAllOperations(from, to) {
+        this.allOperationsElement.addEventListener('click', () => {
+            this.getOperations(from, to);
+            location.href = '/income-expenses';
+        })
     }
     getIntervalDate() {
         this.btnIntervalElement.addEventListener('click', (e) => {
+            this.btnIntervalElement.classList.add('active')
             this.dateFrom = this.fromDateElement.value;
             this.dateTo = this.beforeDateElement.value;
-            console.log(this.dateFrom);
-            console.log(this.dateTo);
+            this.getOperations(this.dateFrom,this.dateTo);
+
         })
     }
-   async getOperations() {
+   async getOperations(from, to) {
         if (this.getInfoRefreshToken) {
-            const result = await CustomHttp.request(config.host + '/operations')
+            const result = await CustomHttp.request(config.host + '/operations?period=interval&dateFrom=' + from + '&dateTo=' + to);
             console.log(result);
+            if (result) {
+
+                this.showRecords(result)
+
+            }
         }
+
+
+    }
+    showRecords(data) {
+        console.log(data)
+        const recordsElement = document.getElementById("records");
+        for (let i = 0; i < data.length; i++) {
+            const trElement = document.createElement("tr");
+            trElement.setAttribute('scope', 'col');
+            trElement.classList.add('text-center');
+            trElement.insertCell().innerHTML = i + 1;
+            trElement.insertCell().innerText = data[i].type;
+            trElement.insertCell().innerText = data[i].category;
+            trElement.insertCell().innerText = data[i].amount;
+            trElement.insertCell().innerText = data[i].date;
+            trElement.insertCell().innerText = data[i].comment;
+            trElement.insertCell().innerHTML =
+                '<a href="javascript:void(0)"  class="link me-2" id="delete">' + '<i class="bi bi-trash" id="'+ data[i].id + '"></i>' +
+                '</a>' + '<a href="javascript:void(0)" class="link" id="update">' + '<i class="bi bi-pencil" id="'+ data[i].id + '"></i>' + '</a>';
+            recordsElement.appendChild(trElement);
+        }
+        const iconDelete = document.querySelectorAll('a#delete');
+        const iconUpdate = document.querySelectorAll('a#update');
+        const that = this;
+        iconDelete.forEach(e => {
+            e.addEventListener('click', (e) => {
+                // e.preventDefault();
+                let id = e.target.id;
+                this.modalElement.style.display = 'block';
+                this.modalElement.addEventListener('click', (e) => {
+                    if (e.target.id.includes('yes')) {
+                        that.deleteOperation(id);
+                        Auth.removeOperationsCategory();
+                        location.href = '/income-expenses';
+
+                    } else if (e.target.id.includes('no')) {
+
+                        console.log('no');
+                        return  this.modalElement.style.display = 'none';
+                    }
+                })
+
+            })
+
+        })
+        iconUpdate.forEach(e => {
+            e.addEventListener('click', (e) => {
+
+            })
+        })
+
+
+
 
     }
 
@@ -59,5 +133,8 @@ export class IncomeExpenses {
                 document.getElementById('balance').innerHTML = result.balance + '' + '$';
             }
         }
+    }
+   async deleteOperation(id) {
+       await CustomHttp.request(config.host + '/operations/' + parseInt(id), 'DELETE');
     }
 }
