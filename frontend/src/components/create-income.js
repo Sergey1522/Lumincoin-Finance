@@ -1,8 +1,7 @@
 import {Auth} from "../services/auth";
-import {Chart} from "chart.js/auto";
 import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
-import isTableElement from "@popperjs/core/lib/dom-utils/isTableElement";
+
 
 
 export class CreateIncome {

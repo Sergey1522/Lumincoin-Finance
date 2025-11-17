@@ -1,16 +1,13 @@
 import {Auth} from "../services/auth";
 import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
-import {IncomeExpenses} from "./income-expenses";
-import {isNumber} from "chart.js/helpers";
+
 
 export class CreateIncomeExpense {
     constructor() {
         this.formSelectCategory = document.getElementById('form-select-category');
         this.userInfoElement = document.getElementById("user-info");
-
         this.inputTypeElement = document.getElementById('type');
-        this.inputIdCategoryElement = document.getElementById('category');
         this.amountCategoryElement = document.getElementById('amount');
         this.dateCategoryElement = document.getElementById('date');
         this.commentsCategoryElement = document.getElementById('comments');
@@ -41,12 +38,7 @@ export class CreateIncomeExpense {
         })
 
         this.btnCreateElement.addEventListener('click', (e) => {
-            // e.preventDefault();
-
-            // this.getIdTitle(this.myCreateIncome);
             this.initCreate(this.myCreateIncome);
-            console.log(this.inputTypeElement.value);
-            console.log(this.optionCategory );
         })
 
 
@@ -106,9 +98,6 @@ export class CreateIncomeExpense {
                 category_id: parseInt(this.optionCategory),
             });
          if (result) {
-
-             Auth.setOperationsCategory(result);
-
              location.href = '/income-expenses';
          }
 

@@ -18,6 +18,10 @@ export class Logout {
          });
         console.log(result)
          if (result.error === false) {
+             Auth.removeTokens(Auth.refreshTokenKey);
+             Auth.removeTokens(Auth.accessTokenKey);
+             Auth.removeUserInfo();
+
              location.href = '/login';
          }
 

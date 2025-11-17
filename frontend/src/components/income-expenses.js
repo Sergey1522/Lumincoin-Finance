@@ -2,6 +2,7 @@ import {Auth} from "../services/auth";
 import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
 
+
 export class IncomeExpenses {
     constructor() {
         this.modalElement = document.getElementById('modal');
@@ -11,6 +12,9 @@ export class IncomeExpenses {
         this.btnIntervalElement = document.getElementById("interval");
         this.allOperationsElement = document.getElementById("all");
         this.actionsBtnElement = document.querySelectorAll('.actions-button a');
+        console.log(this.actionsBtnElement)
+        this.getResultOperations = Auth.getOperationsCategory();
+        console.log(this.getResultOperations)
 
 
         this.dateFrom = null;
@@ -18,6 +22,9 @@ export class IncomeExpenses {
         this.dateFromAll = '1969-10-29';
         const date = new Date();
         this.dateToAll = date.toISOString().split('T')[0];
+
+
+
         this.actionsBtnElement.forEach((btn) => {
             btn.addEventListener('click', (e) => {
                 Auth.setTypeTitleIncomeExpenses(e.target.id)
@@ -29,27 +36,33 @@ export class IncomeExpenses {
 
         this.getInfoUser = Auth.getUserInfo();
         this.getInfoRefreshToken = localStorage.getItem(Auth.refreshTokenKey);
-        this.getOperations(this.dateFromAll,this.dateToAll);
         this.initBalance();
         this.showUser();
         this.getIntervalDate();
-        this.getAllOperations(this.dateFromAll, this.dateToAll);
+        this.getAllOperations();
+        this.getOperations(this.dateFromAll, this.dateToAll);
+
 
 
 
     }
-    getAllOperations(from, to) {
+    getAllOperations() {
         this.allOperationsElement.addEventListener('click', () => {
-            this.getOperations(from, to);
             location.href = '/income-expenses';
         })
     }
     getIntervalDate() {
         this.btnIntervalElement.addEventListener('click', (e) => {
-            this.btnIntervalElement.classList.add('active')
+            // this.btnIntervalElement.classList.add('active')
             this.dateFrom = this.fromDateElement.value;
             this.dateTo = this.beforeDateElement.value;
-            this.getOperations(this.dateFrom,this.dateTo);
+            if (this.dateFrom === '' && this.dateTo === '') {
+                return;
+            }else {
+                // location.href = '/income-expenses';
+                this.getOperations(this.dateFrom,this.dateTo);
+
+            }
 
         })
     }
@@ -58,10 +71,12 @@ export class IncomeExpenses {
             const result = await CustomHttp.request(config.host + '/operations?period=interval&dateFrom=' + from + '&dateTo=' + to);
             console.log(result);
             if (result) {
-
+                Auth.setOperationsCategory(result);
+                console.log(Auth.getOperationsCategory())
                 this.showRecords(result)
-
             }
+
+
         }
 
 
@@ -70,20 +85,42 @@ export class IncomeExpenses {
         console.log(data)
         const recordsElement = document.getElementById("records");
         for (let i = 0; i < data.length; i++) {
+            const date = data[i].date;
+            const result = date.split('-').reverse().join('.');
+            let rusTransType = null;
+            if (data[i].type === 'income') {
+                rusTransType = 'доход';
+            }
+            if (data[i].type === 'expense') {
+                rusTransType = 'расход';
+            }
             const trElement = document.createElement("tr");
             trElement.setAttribute('scope', 'col');
             trElement.classList.add('text-center');
             trElement.insertCell().innerHTML = i + 1;
-            trElement.insertCell().innerText = data[i].type;
+            trElement.insertCell().innerText = rusTransType;
             trElement.insertCell().innerText = data[i].category;
-            trElement.insertCell().innerText = data[i].amount;
-            trElement.insertCell().innerText = data[i].date;
+            trElement.insertCell().innerText = data[i].amount +  '$';
+            trElement.insertCell().innerText = result;
             trElement.insertCell().innerText = data[i].comment;
             trElement.insertCell().innerHTML =
                 '<a href="javascript:void(0)"  class="link me-2" id="delete">' + '<i class="bi bi-trash" id="'+ data[i].id + '"></i>' +
                 '</a>' + '<a href="javascript:void(0)" class="link" id="update">' + '<i class="bi bi-pencil" id="'+ data[i].id + '"></i>' + '</a>';
             recordsElement.appendChild(trElement);
+
+
         }
+        const td = document.querySelectorAll('td');
+        td.forEach(el => {
+            if (el.innerText === 'доход') {
+                el.classList.add('text-success');
+            }
+            if (el.innerText === 'расход') {
+                el.classList.add('text-danger');
+            }
+
+        })
+
         const iconDelete = document.querySelectorAll('a#delete');
         const iconUpdate = document.querySelectorAll('a#update');
         const that = this;
@@ -109,7 +146,12 @@ export class IncomeExpenses {
 
         })
         iconUpdate.forEach(e => {
+
             e.addEventListener('click', (e) => {
+                let id = e.target.id;
+                Auth.setUpdateOperationsId(id);
+
+                location.href = '/update-income-expenses';
 
             })
         })

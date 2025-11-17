@@ -1,19 +1,5 @@
 
 <div class="d-flex" id="wrapper">
-    <div class="modal">
-        <div class="modal-window">
-            <div class="modal-window-content d-flex flex-column align-items-center">
-                <div class="modal-window-title">Вы действительно хотите удалить категорию? Связанные доходы останутся
-                    без
-                    категории.
-                </div>
-                <div class="modal-window-btn d-flex gap-4">
-                    <button type="button" class="btn btn-success">Да, удалить</button>
-                    <button type="button" class="btn btn-danger">Не удалять</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Sidebar-->
     <div class="sidebar d-flex flex-column flex-shrink-0  border-end">
         <a href="/"
@@ -28,13 +14,13 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item item">
-                <a href="#" class="nav-link" role="button" aria-current="true">
+                <a href="/" class="nav-link" role="button" aria-current="true">
                     <i class="bi bi-house"></i>
                     Главная
                 </a>
             </li>
             <li class="nav-item item">
-                <a href="#" class="nav-link" role="link">
+                <a href="/income-expenses" class="nav-link" role="link">
                     <i class="bi bi-cash-coin"></i>
                     Доходы & Расходы
                 </a>
@@ -47,38 +33,43 @@
                 </a>
 
                 <ul class="dropdown-menu show">
-                    <li><a class="dropdown-item active" href="#">Доходы</a></li>
-                    <li><a class="dropdown-item" href="#">Расходы</a></li>
+                    <li><a class="dropdown-item active" href="/income">Доходы</a></li>
+                    <li><a class="dropdown-item" href="/expenses">Расходы</a></li>
                 </ul>
             </li>
         </ul>
 
         <div class="balance mt-auto">
-            Баланс:
-            <span>500$</span>
+            Баланс: <span id="balance"></span>
         </div>
         <hr>
         <div class="user">
-            <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none"
-               data-bs-toggle="dropdown" aria-expanded="false">
+            <a href="javascript:void(0)" type="button"
+               class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+               data-bs-toggle="dropdown">
                 <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <span>Sergey Isaev</span>
+                <span id="user-info"></span>
             </a>
+            <ul class="dropdown-menu" id="dropdown-menu">
+                <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+            </ul>
         </div>
     </div>
     <div class="main">
-        <div class="container-text">Редактирование дохода/расхода</div>
+        <div class="container-text mb-5">Редактирование дохода/расхода</div>
         <div class="update-create">
             <div class="update-input d-flex flex-column gap-3">
                 <input class="form-control" type="text" name="income" id="type" placeholder="Доход">
-                <input class="form-control" type="text" name="income" id="category" placeholder="Зарплата">
+                <select class="form-select" id="form-select-category" aria-label="Пример выбора по умолчанию">
+                    <option selected>Откройте для выбора категории выбора</option>
+                </select>
                 <input class="form-control" type="text" name="income" id="amount" placeholder="500$">
                 <input class="form-control" type="text" name="income" id="date" placeholder="11.09.2022">
                 <input class="form-control" type="text" name="income" id="comments" placeholder="Комментарий...">
             </div>
-            <div class="update-btn d-flex gap-4">
-                <button type="button" class="btn btn-success">Сохранить</button>
-                <button type="button" class="btn btn-danger">Отмена</button>
+            <div class="update-btn d-flex gap-4 mt-4">
+                <button type="button" class="btn btn-success" id="save">Сохранить</button>
+                <button type="button" class="btn btn-danger" id="not-save">Отмена</button>
             </div>
         </div>
 

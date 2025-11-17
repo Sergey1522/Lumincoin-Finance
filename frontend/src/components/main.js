@@ -2,7 +2,7 @@ import {Auth} from "../services/auth";
 import {Chart} from "chart.js/auto";
 import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
-import {Logout} from "./logout";
+
 
 
 export class Main {
@@ -23,6 +23,7 @@ export class Main {
             // this.initChartJs(this.resultObjCategory);
             this.getOperations();
         }
+
 
         console.log(this.getInfoUser)
         console.log(this.getInfoUserTokens)
@@ -57,9 +58,11 @@ export class Main {
             document.getElementById('user-info').innerHTML = this.getInfoUser.name + ' ' + this.getInfoUser.lastName;
         }
         this.btnCategoryElement.addEventListener('click', (e) => {
+            e.preventDefault();
 
             if (e.target.getAttribute('aria-expanded') === 'true') {
                 console.log(1)
+                e.preventDefault();
                 this.btnCategoryElement.classList.add('active');
                 this.arrowCategoryElement.style.transform = 'rotate(90deg)';
             }
@@ -94,10 +97,10 @@ export class Main {
                         label: "Доходы",
                         data: incomeData,
                         backgroundColor: [
-                            "#DC3545",
+                            "#20c997",
                             "#fd7e14",
                             "#ffc107",
-                            "#20c997",
+                            "#DC3545",
                             "#0d6efd",
                         ],
                         hoverOffset: 4,
