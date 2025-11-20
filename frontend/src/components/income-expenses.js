@@ -1,6 +1,7 @@
 import {Auth} from "../services/auth";
 import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
+import {DateFilterManager} from "../services/dateFilterManager";
 
 
 export class IncomeExpenses {
@@ -11,14 +12,19 @@ export class IncomeExpenses {
         this.beforeDateElement = document.getElementById("before-date");
         this.btnIntervalElement = document.getElementById("interval");
         this.allOperationsElement = document.getElementById("all");
+
+
         this.actionsBtnElement = document.querySelectorAll('.actions-button a');
-        console.log(this.actionsBtnElement)
+
         this.getResultOperations = Auth.getOperationsCategory();
-        console.log(this.getResultOperations)
+        // this.dateFilterManager = new DateFilterManager('date');
+
 
 
         this.dateFrom = null;
         this.dateTo = null;
+        console.log(this.dateFrom)
+        console.log(this.dateTo)
         this.dateFromAll = '1969-10-29';
         const date = new Date();
         this.dateToAll = date.toISOString().split('T')[0];
@@ -38,52 +44,136 @@ export class IncomeExpenses {
         this.getInfoRefreshToken = localStorage.getItem(Auth.refreshTokenKey);
         this.initBalance();
         this.showUser();
-        this.getIntervalDate();
-        this.getAllOperations();
+        // this.getIntervalDate();
+        // this.getAllOperations();
         this.getOperations(this.dateFromAll, this.dateToAll);
 
 
+        document.getElementById('today').addEventListener('click', () => this.setFilter('today'));
+        document.getElementById('week').addEventListener('click', () => this.setFilter('week'));
+        document.getElementById('month').addEventListener('click', () => this.setFilter('month'));
+        document.getElementById('year').addEventListener('click', () => this.setFilter('year'));
+        document.getElementById('all').addEventListener('click', () => this.setFilter('all'));
+        document.getElementById('interval').addEventListener('click', () => this.setFilter('interval'));
+
+    }
+
+
+
+
+    setFilter(currentFilter) {
+        this.updateActiveButton(currentFilter)
+        this.getDateRange(currentFilter)
 
 
     }
-    getAllOperations() {
-        this.allOperationsElement.addEventListener('click', () => {
-            location.href = '/income-expenses';
-        })
+    updateActiveButton(activeFilter) {
+        document.querySelectorAll('.btn-actions').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.getElementById(`${activeFilter}`).classList.add('active');
     }
-    getIntervalDate() {
-        this.btnIntervalElement.addEventListener('click', (e) => {
-            // this.btnIntervalElement.classList.add('active')
-            this.dateFrom = this.fromDateElement.value;
-            this.dateTo = this.beforeDateElement.value;
-            if (this.dateFrom === '' && this.dateTo === '') {
-                return;
-            }else {
-                // location.href = '/income-expenses';
-                this.getOperations(this.dateFrom,this.dateTo);
+    getDateRange(currentFilter) {
+        const now = new Date();
+        let startDate, endDate;
 
-            }
+        switch (currentFilter) {
+            case 'today':
+                startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString().split('T')[0];
+                endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59).toISOString().split('T')[0];
+                this.getOperations(startDate,endDate)
+                break;
 
-        })
+            case 'week':
+                const dayOfWeek = now.getDay();
+                const diff = now.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+                startDate = new Date(now.getFullYear(), now.getMonth(), diff);
+                endDate = new Date(now.getFullYear(), now.getMonth(), diff + 6, 23, 59, 59);
+                this.getOperations(startDate,endDate)
+                break;
+
+            case 'month':
+                startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+                endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+                this.getOperations(startDate,endDate)
+                break;
+
+            case 'year':
+                startDate = new Date(now.getFullYear(), 0, 1);
+                endDate = new Date(now.getFullYear(), 11, 31, 23, 59, 59);
+                this.getOperations(startDate,endDate)
+                break;
+
+            case 'all':
+                startDate = this.dateFromAll;
+                endDate = this.dateToAll;
+                this.getOperations(startDate,endDate)
+                break;
+            case 'interval':
+                startDate = this.fromDateElement.value;
+                endDate = this.beforeDateElement.value;
+                if (startDate === '' && endDate === '') {
+                    return;
+                }else {
+                    this.getOperations(startDate,endDate);
+                }
+                break;
+
+            default:
+                startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+                this.getOperations(startDate,endDate)
+        }
+
     }
+
+
+
+
+
+
+    // getIntervalDate() {
+    //     this.btnIntervalElement.addEventListener('click', (e) => {
+    //         // this.btnIntervalElement.classList.add('active')
+    //         this.dateFrom = this.fromDateElement.value;
+    //         this.dateTo = this.beforeDateElement.value;
+    //         if (this.dateFrom === '' && this.dateTo === '') {
+    //             return;
+    //         }else {
+    //
+    //             this.getOperations(this.dateFrom,this.dateTo);
+    //
+    //         }
+    //
+    //     })
+    // }
    async getOperations(from, to) {
+
         if (this.getInfoRefreshToken) {
             const result = await CustomHttp.request(config.host + '/operations?period=interval&dateFrom=' + from + '&dateTo=' + to);
             console.log(result);
             if (result) {
                 Auth.setOperationsCategory(result);
                 console.log(Auth.getOperationsCategory())
-                this.showRecords(result)
             }
-
+            this.showRecords(result);
 
         }
-
-
     }
     showRecords(data) {
         console.log(data)
         const recordsElement = document.getElementById("records");
+        recordsElement.innerHTML = '';
+        if (!data || data.length === 0) {
+            recordsElement.innerHTML = `
+            <tr>
+                <td colspan="7" class="text-center text-muted py-4">
+                    Нет данных для отображения
+                </td>
+            </tr>
+        `;
+            return;
+        }
         for (let i = 0; i < data.length; i++) {
             const date = data[i].date;
             const result = date.split('-').reverse().join('.');
@@ -107,7 +197,6 @@ export class IncomeExpenses {
                 '<a href="javascript:void(0)"  class="link me-2" id="delete">' + '<i class="bi bi-trash" id="'+ data[i].id + '"></i>' +
                 '</a>' + '<a href="javascript:void(0)" class="link" id="update">' + '<i class="bi bi-pencil" id="'+ data[i].id + '"></i>' + '</a>';
             recordsElement.appendChild(trElement);
-
 
         }
         const td = document.querySelectorAll('td');

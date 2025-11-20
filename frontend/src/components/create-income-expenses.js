@@ -12,6 +12,7 @@ export class CreateIncomeExpense {
         this.dateCategoryElement = document.getElementById('date');
         this.commentsCategoryElement = document.getElementById('comments');
         this.btnCreateElement = document.getElementById('create');
+        this.btnCancelElement = document.getElementById('cancel');
 
 
         this.myCreateIncome = Auth.getIncome();
@@ -35,11 +36,15 @@ export class CreateIncomeExpense {
         }
         this.formSelectCategory.addEventListener('change', (event) => {
             this.optionCategory = event.target.value;
-        })
+        });
 
         this.btnCreateElement.addEventListener('click', (e) => {
             this.initCreate(this.myCreateIncome);
+        });
+        this.btnCancelElement.addEventListener('click', (e) => {
+            location.href = '/income-expenses';
         })
+
 
 
 
