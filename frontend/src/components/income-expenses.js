@@ -1,7 +1,7 @@
 import {Auth} from "../services/auth";
 import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
-import {DateFilterManager} from "../services/dateFilterManager";
+
 
 
 export class IncomeExpenses {
@@ -10,17 +10,7 @@ export class IncomeExpenses {
         this.userInfoElement = document.getElementById("user-info");
         this.fromDateElement = document.getElementById("from-date");
         this.beforeDateElement = document.getElementById("before-date");
-        this.btnIntervalElement = document.getElementById("interval");
-        this.allOperationsElement = document.getElementById("all");
-
-
         this.actionsBtnElement = document.querySelectorAll('.actions-button a');
-
-        this.getResultOperations = Auth.getOperationsCategory();
-        // this.dateFilterManager = new DateFilterManager('date');
-
-
-
         this.dateFrom = null;
         this.dateTo = null;
         console.log(this.dateFrom)
@@ -44,8 +34,6 @@ export class IncomeExpenses {
         this.getInfoRefreshToken = localStorage.getItem(Auth.refreshTokenKey);
         this.initBalance();
         this.showUser();
-        // this.getIntervalDate();
-        // this.getAllOperations();
         this.getOperations(this.dateFromAll, this.dateToAll);
 
 
@@ -126,27 +114,6 @@ export class IncomeExpenses {
         }
 
     }
-
-
-
-
-
-
-    // getIntervalDate() {
-    //     this.btnIntervalElement.addEventListener('click', (e) => {
-    //         // this.btnIntervalElement.classList.add('active')
-    //         this.dateFrom = this.fromDateElement.value;
-    //         this.dateTo = this.beforeDateElement.value;
-    //         if (this.dateFrom === '' && this.dateTo === '') {
-    //             return;
-    //         }else {
-    //
-    //             this.getOperations(this.dateFrom,this.dateTo);
-    //
-    //         }
-    //
-    //     })
-    // }
    async getOperations(from, to) {
 
         if (this.getInfoRefreshToken) {
