@@ -1,22 +1,28 @@
 import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
 import {Auth} from "../services/auth";
+import {UserLoginType} from "../types/user-login.type";
 
 export class Login {
+    private emailElement: HTMLInputElement;
+    private passwordElement: HTMLInputElement;
+    private rememberMeElement: HTMLInputElement;
+
+
     constructor() {
 
-        this.emailElement = document.getElementById('email');
-        this.passwordElement = document.getElementById('password');
-        this.rememberMeElement = document.getElementById('remember-me');
+        this.emailElement = document.getElementById('email') as HTMLInputElement;
+        this.passwordElement = document.getElementById('password') as HTMLInputElement;
+        this.rememberMeElement = document.getElementById('remember-me') as HTMLInputElement;
 
         document.getElementById('process-button').addEventListener('click', this.login.bind(this));
 
     }
 
 
-    validateForm() {
+   public validateForm(): boolean {
 
-        let isValid = true
+        let isValid: boolean = true
         if (this.emailElement.value && this.emailElement.value.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
             this.emailElement.classList.remove('is-invalid');
         } else {
@@ -33,10 +39,10 @@ export class Login {
         return isValid;
     }
 
-    async login() {
+   private async login(): Promise<void> {
         if (this.validateForm()) {
             try {
-                const result = await CustomHttp.request(config.host + '/login', 'POST', {
+                const result: UserLoginType = await CustomHttp.request(config.host + '/login', 'POST', {
                     email: this.emailElement.value,
                     password: this.passwordElement.value,
                     rememberMe: this.rememberMeElement.checked,

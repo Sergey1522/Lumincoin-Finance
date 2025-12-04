@@ -1,4 +1,4 @@
-import {Signup} from "./components/signup.js";
+import {Signup} from "./components/signup";
 import {Login} from "./components/login";
 import {Main} from "./components/main";
 import {Auth} from "./services/auth";
@@ -12,8 +12,13 @@ import {IncomeExpenses} from "./components/income-expenses";
 import {Logout} from "./components/logout";
 import {CreateIncomeExpense} from "./components/create-income-expenses";
 import {UpdateIncomeExpense} from "./components/update-income-expenses";
+import {RouteType} from "./types/route.type";
 
 export class Router {
+    readonly contentElement: HTMLElement | null;
+    readonly stylesElement: Node | null;
+    readonly titleElement: HTMLElement | null;
+    private routes: RouteType[];
     constructor() {
 
         this.contentElement = document.getElementById("content");
@@ -139,30 +144,33 @@ export class Router {
                     new Login();
                 },
             },
-            {
-                route: '/logout',
-                load: () => {
-                    new Logout();
-
-                }
-            },
+            // {
+            //     route: '/logout',
+            //     load: () => {
+            //         new Logout();
+            //
+            //     }
+            // },
 
         ];
     }
-    initEvent() {
+   private initEvent(): void {
       window.addEventListener('DOMContentLoaded', this.activateRouter.bind(this));
       window.addEventListener('popstate', this.activateRouter.bind(this));
     }
-   async activateRouter() {
-        const urlRoute = window.location.pathname;
+  private async activateRouter(): Promise<void> {
+        const urlRoute:string  = window.location.pathname;
 
-        const newRoute = this.routes.find((item) => item.route === urlRoute);
+      let newRoute: RouteType | undefined;
+      newRoute = this.routes.find(item => item.route === urlRoute);
         if (!newRoute || newRoute.route ===  '/') {
             await Auth.processUnauthorizedResponse();
         }
         if (newRoute) {
             if (newRoute.title) {
-                this.titleElement.innerHTML = newRoute.title;
+                if (this.titleElement) {
+                    this.titleElement.innerHTML = newRoute.title;
+                }
             }
             if (newRoute.styles && newRoute.styles.length > 0) {
                     const link = document.createElement('link');
@@ -171,9 +179,12 @@ export class Router {
                     document.head.insertBefore(link, this.stylesElement);
 
             }
-            if (newRoute.template) {
-                this.contentElement.innerHTML = await fetch(newRoute.template).then((response) => response.text());
+            if (this.contentElement) {
+                if (newRoute.template) {
+                    this.contentElement.innerHTML = await fetch(newRoute.template).then((response) => response.text());
+                }
             }
+
             if (newRoute.load && typeof newRoute.load === 'function') {
                 newRoute.load();
             }

@@ -1,25 +1,25 @@
 import {config} from "../../config/config";
-import {CustomHttp} from "./custom-http";
+
 
 export class Auth {
-    static accessTokenKey = 'accessToken';
-    static refreshTokenKey = 'refreshToken';
-    static userInfoKey = 'userInfo';
-    static newIncomeKey = 'newIncome';
-    static newExpensesKey = 'newExpenses';
-    static idIncomeKey = 'id';
-    static titleIncomeKey = 'titleIncome';
-    static titleExpensesKey = 'titleExpenses';
-    static idExpensesKey = 'id';
-    static typeTitle = 'typeTitle';
-    static resultOperationsCategory = 'resultOperationsCategory';
-    static idOperationsCategory = 'idOperationsCategory';
-    static arrayOperationsCategory = [];
+    static accessTokenKey: string = 'accessToken';
+    static refreshTokenKey: string  = 'refreshToken';
+    static userInfoKey: string  = 'userInfo';
+    static newIncomeKey: string  = 'newIncome';
+    static newExpensesKey: string = 'newExpenses';
+    static idIncomeKey: string = 'id';
+    static titleIncomeKey: string = 'titleIncome';
+    static titleExpensesKey: string = 'titleExpenses';
+    static idExpensesKey: string = 'id';
+    static typeTitle: string = 'typeTitle';
+    static resultOperationsCategory: string = 'resultOperationsCategory';
+    static idOperationsCategory: string = 'idOperationsCategory';
 
-    static async processUnauthorizedResponse() {
-        const refreshToken = localStorage.getItem(this.refreshTokenKey);
+
+   public static async processUnauthorizedResponse(): Promise<boolean> {
+        const refreshToken: string = localStorage.getItem(this.refreshTokenKey);
         if (refreshToken) {
-            const response = await fetch(config.host + '/refresh', {
+            const response: Response = await fetch(config.host + '/refresh', {
 
                 method: 'POST',
                 headers: {
@@ -34,9 +34,7 @@ export class Auth {
                 const result = await response.json();
                 if (result && !result.error) {
                     this.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
-                    // window.location.href = '/';
                     return true;
-
                 }
             }
         }
@@ -49,98 +47,98 @@ export class Auth {
 
 
 
-    static setTokens (accessToken, refreshToken) {
+   public static setTokens (accessToken: string, refreshToken: string): void {
         localStorage.setItem(this.accessTokenKey, accessToken)
         localStorage.setItem(this.refreshTokenKey, refreshToken)
     }
-    static getTokens() {
+   public static getTokens(): string {
        return  localStorage.getItem(this.accessTokenKey);
        return  localStorage.getItem(this.refreshTokenKey);
 
     }
 
-    static removeTokens () {
+   public static removeTokens (): void {
         localStorage.removeItem(this.accessTokenKey)
         localStorage.removeItem(this.refreshTokenKey)
     }
-    static setUserInfo(info) {
+   public static setUserInfo(info): void {
         localStorage.setItem(this.userInfoKey, JSON.stringify(info));
     }
 
-    static getUserInfo() {
-        const userInfo = localStorage.getItem(this.userInfoKey);
+   public static getUserInfo(): string | null {
+        const userInfo: string = localStorage.getItem(this.userInfoKey);
         if (userInfo) {
             return JSON.parse(userInfo)
         }
         return null;
     }
-    static removeUserInfo() {
-        return localStorage.removeItem(this.userInfoKey);
+    static removeUserInfo(): void {
+         localStorage.removeItem(this.userInfoKey);
     }
-    static setIncome(income) {
+    public static setIncome(income: string): void {
         localStorage.setItem(this.newIncomeKey, JSON.stringify(income));
     }
-    static getIncome() {
-        const incomeInfo = localStorage.getItem(this.newIncomeKey);
+    public static getIncome(): string | null {
+        const incomeInfo: string = localStorage.getItem(this.newIncomeKey);
         if (incomeInfo) {
             return JSON.parse(incomeInfo)
         }
         return null;
     }
-    static removeIncome() {
-        return localStorage.removeItem(this.newIncomeKey);
+    public static removeIncome(): void {
+         localStorage.removeItem(this.newIncomeKey);
     }
 
 
 
-    static setUpdateIncomeId(id) {
+    public static setUpdateIncomeId(id: string): void {
         localStorage.setItem(this.idIncomeKey, id);
     }
-    static setUpdateIncomeTitle(titleIncome) {
+    public static setUpdateIncomeTitle(titleIncome: string): void {
         localStorage.setItem(this.titleIncomeKey, titleIncome);
     }
-    static getUpdateIncomeId() {
+    public static getUpdateIncomeId(): string {
         return localStorage.getItem(this.idIncomeKey);
     }
-    static getUpdateIncomeTitle() {
+    public static getUpdateIncomeTitle(): string {
         return localStorage.getItem(this.titleIncomeKey);
     }
 
 
-    static setExpenses(expenses) {
+    public static setExpenses(expenses: string): void {
         localStorage.setItem(this.newExpensesKey, JSON.stringify(expenses));
     }
-    static getExpenses() {
-        const expensesInfo = localStorage.getItem(this.newExpensesKey);
+    public static getExpenses(): string | null {
+        const expensesInfo: string = localStorage.getItem(this.newExpensesKey);
         if (expensesInfo) {
             return JSON.parse(expensesInfo)
         }
         return null;
     }
-    static removeExpenses() {
-        return localStorage.removeItem(this.newExpensesKey);
+    public static removeExpenses(): void {
+         localStorage.removeItem(this.newExpensesKey);
     }
 
 
 
 
-    static setUpdateExpensesId(id) {
+    public static setUpdateExpensesId(id: string): void {
         localStorage.setItem(this.idExpensesKey, id);
     }
-    static getUpdateExpensesId() {
+    public static getUpdateExpensesId(): string | null {
         return localStorage.getItem(this.idExpensesKey);
     }
-    static setUpdateExpensesTitle(titleExpenses) {
+    public static setUpdateExpensesTitle(titleExpenses: string): void {
         localStorage.setItem(this.titleExpensesKey, titleExpenses);
     }
-    static getUpdateExpensesTitle() {
+    public static getUpdateExpensesTitle(): string | null {
         return localStorage.getItem(this.titleExpensesKey);
     }
 
-    static setTypeTitleIncomeExpenses(typeTitle) {
+    public static setTypeTitleIncomeExpenses(typeTitle: string): void {
         localStorage.setItem(this.typeTitle, typeTitle);
     }
-    static getTypeTitleIncomeExpenses() {
+    public static getTypeTitleIncomeExpenses(): string | null {
         return localStorage.getItem(this.typeTitle);
     }
 
@@ -151,7 +149,6 @@ export class Auth {
         localStorage.setItem(this.resultOperationsCategory, JSON.stringify(data));
     }
     static getOperationsCategory() {
-
         const resultOperationsCategory = localStorage.getItem(this.resultOperationsCategory);
         if (resultOperationsCategory) {
             return  JSON.parse(resultOperationsCategory);

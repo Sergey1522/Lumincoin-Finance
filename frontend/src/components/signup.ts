@@ -2,22 +2,29 @@ import {config} from "../../config/config";
 import {CustomHttp} from "../services/custom-http";
 
 export class Signup {
+    private nameElement: HTMLInputElement;
+    private lastNameElement: HTMLInputElement;
+    private emailElement: HTMLInputElement;
+    private passwordElement: HTMLInputElement;
+    private passwordRepeatElement: HTMLInputElement;
+    private commonErrorElement: HTMLElement;
+
     constructor() {
-        this.nameElement = document.getElementById('name');
-        this.lastNameElement = document.getElementById('last-name');
-        this.emailElement = document.getElementById('email');
-        this.passwordElement = document.getElementById('password');
-        this.passwordRepeatElement = document.getElementById('password-repeat');
-        this.commonErorrElement = document.getElementById('common-error');
+        this.nameElement = document.getElementById('name') as HTMLInputElement;
+        this.lastNameElement = document.getElementById('last-name') as HTMLInputElement;
+        this.emailElement = document.getElementById('email') as HTMLInputElement;
+        this.passwordElement = document.getElementById('password') as HTMLInputElement;
+        this.passwordRepeatElement = document.getElementById('password-repeat') as HTMLInputElement;
+        this.commonErrorElement = document.getElementById('common-error');
 
         document.getElementById('process-button').addEventListener('click', this.signUp.bind(this));
 
     }
 
 
-    validateForm() {
+   public validateForm(): boolean {
 
-        let isValid = true
+        let isValid: boolean = true
 
         if (this.nameElement.value) {
             this.nameElement.classList.remove('is-invalid');
@@ -57,7 +64,7 @@ export class Signup {
 
     }
 
-    async signUp() {
+   private async signUp():Promise<void> {
         if (this.validateForm()) {
             try {
                 const result = await CustomHttp.request(config.host + '/signup', 'POST', {
@@ -69,7 +76,7 @@ export class Signup {
                 });
                 if (result) {
                     if (result.error || !result.user) {
-                        this.commonErorrElement.style.display = 'block';
+                        this.commonErrorElement.style.display = 'block';
                         throw new Error(result.message);
                     }
                     location.href = '/login';
