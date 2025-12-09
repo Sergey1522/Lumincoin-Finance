@@ -203,9 +203,15 @@ export class IncomeExpenses {
         })
         iconUpdate.forEach(e => {
 
-            e.addEventListener('click', (e) => {
-                let id = e.target.id;
-                Auth.setUpdateOperationsId(id);
+            e.addEventListener('click', (e: Event) => {
+                if (e.target) {
+                     let id: string = e.target.id;
+                if (id) {
+                    Auth.setUpdateOperationsId(id);
+                }
+                }
+               
+                
 
                 location.href = '/update-income-expenses';
 

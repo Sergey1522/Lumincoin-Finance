@@ -1,17 +1,29 @@
 import {Auth} from "../services/auth";
 import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
+import { UserInfoType } from "../types/user-info.type";
+import { UserLoginType } from "../types/user-login.type";
+import { CategoriesIncomeType } from "../types/categories-income.type";
+import { BalanceUserType } from "../types/balance-user.type";
+
 
 
 
 export class CreateIncome {
-    constructor() {
-        this.addNewIncomeElement = document.getElementById("create-income");
-        this.buttonCreateElement = document.getElementById("create");
-        this.buttonCancelElement = document.getElementById("cancel");
-        this.userInfoElement = document.getElementById("user-info");
-        this.liveToastElement = document.getElementById('liveToast');
+    private addNewIncomeElement: HTMLInputElement;
+    private buttonCreateElement: HTMLElement;
+    private buttonCancelElement: HTMLElement;
+    private liveToastElement: HTMLElement;
+    private getInfoUser: UserInfoType | UserLoginType | null;
+    private getInfoIncome: CategoriesIncomeType[] | null;
+    private getInfoUserTokens: string | null;
+    private getInfoRefreshToken: string | null;
 
+    constructor() {
+        this.addNewIncomeElement = document.getElementById("create-income") as HTMLInputElement;
+        this.buttonCreateElement = document.getElementById("create") as HTMLElement;
+        this.buttonCancelElement = document.getElementById("cancel") as HTMLElement;
+        this.liveToastElement = document.getElementById('liveToast') as HTMLElement;
         this.getInfoUser = Auth.getUserInfo();
         this.getInfoIncome = Auth.getIncome();
         this.getInfoUserTokens = Auth.getTokens();
@@ -24,8 +36,9 @@ export class CreateIncome {
 
     }
 
-    createIncome(date) {
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.liveToastElement);
+   private createIncome(date: CategoriesIncomeType[] | null): void {
+        
+        const toastBootstrap =  bootstrap.Toast.getOrCreateInstance(this.liveToastElement);
         const toastBody = document.getElementById('toast-body');
         this.buttonCreateElement.addEventListener("click", (e) => {
             this.newCreateIncome();
@@ -33,11 +46,17 @@ export class CreateIncome {
                 for (let i = 0; i < date.length; i++) {
                     if (this.addNewIncomeElement.value === date[i].title) {
                         toastBootstrap.show();
-                        toastBody.textContent = 'Такая категория уже есть';
+                        if (toastBody) {
+                            toastBody.textContent = 'Такая категория уже есть';
+                        }
+                        
                     }
                     if (this.addNewIncomeElement.value === '') {
                         toastBootstrap.show();
-                        toastBody.textContent = 'Дайте название категории';
+                        if (toastBody) {
+                             toastBody.textContent = 'Дайте название категории';
+                        }
+                       
                     }
                 }
 
@@ -47,43 +66,48 @@ export class CreateIncome {
 
     }
 
-    cancelCreateIncome() {
+   private cancelCreateIncome(): void {
         this.buttonCancelElement.addEventListener("click", () => {
-            console.log(2)
             location.href = '/income'
         })
     }
 
 
-    async initBalance() {
-        if (this.getInfoRefreshToken) {
-            const result = await CustomHttp.request(config.host + '/balance');
-            console.log(result);
-            if (result) {
-                document.getElementById('balance').innerHTML = result.balance + '' + '$';
-            }
-        }
-    }
-
-    showUser() {
+  private showUser(): void {
+      if (this.getInfoUser) {
         if (this.getInfoUser.name || this.getInfoUser.lastName) {
-            this.userInfoElement.innerHTML = this.getInfoUser.name + ' ' + this.getInfoUser.lastName;
+          const userInfo = document.getElementById("user-info");
+          if (userInfo) {
+            userInfo.innerHTML =
+              this.getInfoUser.name + " " + this.getInfoUser.lastName;
+          }
         }
+      }
+    }
+  
+    private async initBalance(): Promise<void> {
+      if (this.getInfoRefreshToken) {
+        const result: BalanceUserType = await CustomHttp.request(
+          config.host + "/balance"
+        );
+        if (result) {
+          const balance = document.getElementById("balance");
+          if (balance) {
+            balance.innerHTML = result.balance + "" + "$";
+          }
+        }
+      }
     }
 
-    async newCreateIncome() {
+   private async newCreateIncome(): Promise<void> {
         if (this.getInfoUserTokens) {
             try {
-                const result = await CustomHttp.request(config.host + '/categories/income', 'POST', {
+                const result: CategoriesIncomeType[] = await CustomHttp.request(config.host + '/categories/income', 'POST', {
                     title: this.addNewIncomeElement.value,
                 });
-                console.log(result);
-                if (result || result.title || result.id) {
-                    for (let i = 0; i < result.length; i++) {
-                        Auth.setIncome(result[i]);
-                    }
-
-
+                if (result || (result as CategoriesIncomeType).title || (result as CategoriesIncomeType).id) {
+                
+                        Auth.setIncome(result);
                 }
                 location.href = '/income';
 

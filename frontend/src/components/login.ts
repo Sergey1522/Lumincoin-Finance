@@ -3,6 +3,7 @@ import {config} from "../../config/config";
 import {Auth} from "../services/auth";
 import {UserLoginType} from "../types/user-login.type";
 
+
 export class Login {
     private emailElement: HTMLInputElement;
     private passwordElement: HTMLInputElement;
@@ -14,8 +15,12 @@ export class Login {
         this.emailElement = document.getElementById('email') as HTMLInputElement;
         this.passwordElement = document.getElementById('password') as HTMLInputElement;
         this.rememberMeElement = document.getElementById('remember-me') as HTMLInputElement;
+        const btn = document.getElementById('process-button');
+        if (btn) {
+            btn.addEventListener('click', this.login.bind(this));
+        }
 
-        document.getElementById('process-button').addEventListener('click', this.login.bind(this));
+        
 
     }
 

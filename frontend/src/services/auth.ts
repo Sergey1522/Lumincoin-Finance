@@ -1,4 +1,9 @@
 import {config} from "../../config/config";
+import { CategoriesExpensesType } from "../types/categories-expenses.type";
+import { CategoriesIncomeType } from "../types/categories-income.type";
+import { UserInfoType } from "../types/user-info.type";
+// import { UserInfoType } from "../types/user-info.type";
+import { UserLoginType } from "../types/user-login.type";
 
 
 export class Auth {
@@ -17,7 +22,7 @@ export class Auth {
 
 
    public static async processUnauthorizedResponse(): Promise<boolean> {
-        const refreshToken: string = localStorage.getItem(this.refreshTokenKey);
+        const refreshToken: string | null = localStorage.getItem(this.refreshTokenKey);
         if (refreshToken) {
             const response: Response = await fetch(config.host + '/refresh', {
 
@@ -51,7 +56,7 @@ export class Auth {
         localStorage.setItem(this.accessTokenKey, accessToken)
         localStorage.setItem(this.refreshTokenKey, refreshToken)
     }
-   public static getTokens(): string {
+   public static getTokens(): string | null {
        return  localStorage.getItem(this.accessTokenKey);
        return  localStorage.getItem(this.refreshTokenKey);
 
@@ -61,12 +66,12 @@ export class Auth {
         localStorage.removeItem(this.accessTokenKey)
         localStorage.removeItem(this.refreshTokenKey)
     }
-   public static setUserInfo(info): void {
+   public static setUserInfo(info: UserLoginType | UserInfoType): void {
         localStorage.setItem(this.userInfoKey, JSON.stringify(info));
     }
 
-   public static getUserInfo(): string | null {
-        const userInfo: string = localStorage.getItem(this.userInfoKey);
+   public static getUserInfo(): UserLoginType | UserInfoType |null {
+        const userInfo: string | null = localStorage.getItem(this.userInfoKey);
         if (userInfo) {
             return JSON.parse(userInfo)
         }
@@ -75,11 +80,11 @@ export class Auth {
     static removeUserInfo(): void {
          localStorage.removeItem(this.userInfoKey);
     }
-    public static setIncome(income: string): void {
+    public static setIncome(income: CategoriesIncomeType[]): void {
         localStorage.setItem(this.newIncomeKey, JSON.stringify(income));
     }
-    public static getIncome(): string | null {
-        const incomeInfo: string = localStorage.getItem(this.newIncomeKey);
+    public static getIncome(): CategoriesIncomeType[] | null {
+        const incomeInfo: string | null = localStorage.getItem(this.newIncomeKey);
         if (incomeInfo) {
             return JSON.parse(incomeInfo)
         }
@@ -97,19 +102,19 @@ export class Auth {
     public static setUpdateIncomeTitle(titleIncome: string): void {
         localStorage.setItem(this.titleIncomeKey, titleIncome);
     }
-    public static getUpdateIncomeId(): string {
+    public static getUpdateIncomeId(): string | null {
         return localStorage.getItem(this.idIncomeKey);
     }
-    public static getUpdateIncomeTitle(): string {
+    public static getUpdateIncomeTitle(): string | null {
         return localStorage.getItem(this.titleIncomeKey);
     }
 
 
-    public static setExpenses(expenses: string): void {
+    public static setExpenses(expenses: CategoriesExpensesType[]): void {
         localStorage.setItem(this.newExpensesKey, JSON.stringify(expenses));
     }
     public static getExpenses(): string | null {
-        const expensesInfo: string = localStorage.getItem(this.newExpensesKey);
+        const expensesInfo: string | null = localStorage.getItem(this.newExpensesKey);
         if (expensesInfo) {
             return JSON.parse(expensesInfo)
         }

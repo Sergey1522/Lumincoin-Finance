@@ -1,5 +1,6 @@
 import {config} from "../../config/config";
 import {CustomHttp} from "../services/custom-http";
+import { UserSignUpType } from "../types/user-signup.type";
 
 export class Signup {
     private nameElement: HTMLInputElement;
@@ -15,9 +16,14 @@ export class Signup {
         this.emailElement = document.getElementById('email') as HTMLInputElement;
         this.passwordElement = document.getElementById('password') as HTMLInputElement;
         this.passwordRepeatElement = document.getElementById('password-repeat') as HTMLInputElement;
-        this.commonErrorElement = document.getElementById('common-error');
+        this.commonErrorElement = document.getElementById('common-error') as HTMLElement;
+        const btn = document.getElementById('process-button');
 
-        document.getElementById('process-button').addEventListener('click', this.signUp.bind(this));
+        if(btn) {
+           btn.addEventListener('click', this.signUp.bind(this));
+        }
+
+        
 
     }
 
@@ -67,7 +73,7 @@ export class Signup {
    private async signUp():Promise<void> {
         if (this.validateForm()) {
             try {
-                const result = await CustomHttp.request(config.host + '/signup', 'POST', {
+                const result: UserSignUpType = await CustomHttp.request(config.host + '/signup', 'POST', {
                     name: this.nameElement.value,
                     lastName: this.lastNameElement.value,
                     email: this.emailElement.value,

@@ -158,7 +158,7 @@ export class Router {
       window.addEventListener('DOMContentLoaded', this.activateRouter.bind(this));
       window.addEventListener('popstate', this.activateRouter.bind(this));
     }
-  private async activateRouter(): Promise<void> {
+  private async activateRouter(): Promise<any> {
         const urlRoute:string  = window.location.pathname;
 
       let newRoute: RouteType | undefined;

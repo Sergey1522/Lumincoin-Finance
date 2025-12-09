@@ -13,15 +13,23 @@ module.exports = {
                 use: 'ts-loader',
                 exclude: /node_modules/,
             },
+            {
+                test: /\.css$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'css/[name][ext]'
+                },
+
+            }
         ],
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
-        filename: 'app.ts',
+        filename: 'app.js',
         path: path.resolve(__dirname, 'dist'),
-        clear: true
+        clean: true
     },
 
     devServer: {
@@ -32,18 +40,7 @@ module.exports = {
         port: 9001,
         historyApiFallback: true,
     },
-    module: {
-        rules: [
-            {
-                test: /\.css$/i,
-                type: 'asset/resource',
-                generator: {
-                    filename: 'css/[name][ext]'
-                },
-
-            }
-        ]
-    },
+   
     plugins: [
         new HtmlWebpackPlugin({
             template: './index.html',
