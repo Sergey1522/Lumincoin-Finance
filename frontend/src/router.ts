@@ -144,13 +144,13 @@ export class Router {
                     new Login();
                 },
             },
-            // {
-            //     route: '/logout',
-            //     load: () => {
-            //         new Logout();
-            //
-            //     }
-            // },
+            {
+                route: '/logout',
+                load: () => {
+                    new Logout();
+            
+                }
+            },
 
         ];
     }

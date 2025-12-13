@@ -3,9 +3,12 @@ import {CustomHttp} from "../services/custom-http";
 import {config} from "../../config/config";
 
 export class Logout {
+    private getInfoRefreshToken: string | null;
+    private accessTokenKey: string | null;
     constructor() {
         this.getInfoRefreshToken = localStorage.getItem(Auth.refreshTokenKey);
-        if (!Auth.getTokens(Auth.refreshTokenKey) || !Auth.getTokens(Auth.accessTokenKey)) {
+        this.accessTokenKey = localStorage.getItem(Auth.accessTokenKey);
+        if (!this.getInfoRefreshToken || !this.accessTokenKey) {
           location.href = '/login'
         }
         this.isLogout().then();
@@ -18,8 +21,8 @@ export class Logout {
          });
         console.log(result)
          if (result.error === false) {
-             Auth.removeTokens(Auth.refreshTokenKey);
-             Auth.removeTokens(Auth.accessTokenKey);
+         
+             Auth.removeTokens();
              Auth.removeUserInfo();
 
              location.href = '/login';

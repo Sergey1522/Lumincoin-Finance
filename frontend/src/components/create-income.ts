@@ -5,6 +5,7 @@ import { UserInfoType } from "../types/user-info.type";
 import { UserLoginType } from "../types/user-login.type";
 import { CategoriesIncomeType } from "../types/categories-income.type";
 import { BalanceUserType } from "../types/balance-user.type";
+import * as bootstrap from 'bootstrap'
 
 
 

@@ -1,6 +1,8 @@
 import {config} from "../../config/config";
 import { CategoriesExpensesType } from "../types/categories-expenses.type";
 import { CategoriesIncomeType } from "../types/categories-income.type";
+import { OperationsExpensesType } from "../types/operations-expenses.type ";
+import { OperationsIncomeType } from "../types/operations-income.type";
 import { UserInfoType } from "../types/user-info.type";
 // import { UserInfoType } from "../types/user-info.type";
 import { UserLoginType } from "../types/user-login.type";
@@ -102,18 +104,22 @@ export class Auth {
     public static setUpdateIncomeTitle(titleIncome: string): void {
         localStorage.setItem(this.titleIncomeKey, titleIncome);
     }
-    public static getUpdateIncomeId(): string | null {
-        return localStorage.getItem(this.idIncomeKey);
+    public static getUpdateIncomeId(): string | null   {
+       return localStorage.getItem(this.idIncomeKey);
     }
-    public static getUpdateIncomeTitle(): string | null {
-        return localStorage.getItem(this.titleIncomeKey);
+    public static getUpdateIncomeTitle(): string | null  {
+        const titleIncome = localStorage.getItem(this.titleIncomeKey);
+        if (titleIncome) {
+             return titleIncome;
+        }
+       return null;
     }
 
 
     public static setExpenses(expenses: CategoriesExpensesType[]): void {
         localStorage.setItem(this.newExpensesKey, JSON.stringify(expenses));
     }
-    public static getExpenses(): string | null {
+    public static getExpenses(): CategoriesExpensesType[] | null {
         const expensesInfo: string | null = localStorage.getItem(this.newExpensesKey);
         if (expensesInfo) {
             return JSON.parse(expensesInfo)
@@ -150,10 +156,10 @@ export class Auth {
 
 
 
-    static setOperationsCategory(data) {
+    static setOperationsCategory(data: OperationsExpensesType[] | OperationsIncomeType[]) {
         localStorage.setItem(this.resultOperationsCategory, JSON.stringify(data));
     }
-    static getOperationsCategory() {
+    static getOperationsCategory():  OperationsExpensesType[] | OperationsIncomeType[] | null {
         const resultOperationsCategory = localStorage.getItem(this.resultOperationsCategory);
         if (resultOperationsCategory) {
             return  JSON.parse(resultOperationsCategory);
@@ -165,10 +171,10 @@ export class Auth {
     }
 
 
-    static setUpdateOperationsId(id) {
+    static setUpdateOperationsId(id: string) {
         localStorage.setItem(this.idOperationsCategory, id);
     }
-    static getUpdateOperationsId() {
+    static getUpdateOperationsId(): string | null {
         return localStorage.getItem(this.idOperationsCategory);
     }
 
