@@ -6,6 +6,9 @@ import { UserLoginType } from "../types/user-login.type";
 import { OperationsExpensesType } from "../types/operations-expenses.type ";
 import { OperationsIncomeType } from "../types/operations-income.type";
 import { BalanceUserType } from "../types/balance-user.type";
+import { Income } from "./income";
+import { CategoriesIncomeType } from "../types/categories-income.type";
+import { CategoriesExpensesType } from "../types/categories-expenses.type";
 
 export class IncomeExpenses {
   private modalElement: HTMLElement;
@@ -18,6 +21,8 @@ export class IncomeExpenses {
   private dateToAll: string;
   private getInfoUser: UserInfoType | UserLoginType | null;
   private getInfoRefreshToken: string | null;
+  private getInfoIncome: CategoriesIncomeType[] | null;
+  private getInfoExpense: CategoriesExpensesType[] | null;
   constructor() {
     this.modalElement = document.getElementById("modal") as HTMLElement;
     this.fromDateElement = document.getElementById(
@@ -32,6 +37,8 @@ export class IncomeExpenses {
     this.dateFromAll = "1969-10-29";
     const date = new Date();
     this.dateToAll = date.toISOString().split("T")[0];
+    this.getInfoIncome = Auth.getIncome();
+    this.getInfoExpense = Auth.getExpenses();
 
     this.actionsBtnElement.forEach((btn) => {
       btn.addEventListener("click", (e) => {
@@ -200,8 +207,16 @@ export class IncomeExpenses {
     }
   }
 
- private showRecords(data: OperationsExpensesType[] | OperationsIncomeType[]): void {
-    console.log(data);
+ public showRecords(data: OperationsExpensesType[] | OperationsIncomeType[]): void {
+ const resDelete = data.filter(item => typeof item.category === 'undefined');
+ let is = this;
+ for (let index = 0; index < resDelete.length; index++) {
+  is.deleteOperation(String(resDelete[index].id));
+  location.href = "/income-expenses";
+  console.log(resDelete[index].id)
+  
+ }
+    console.log(resDelete);
     const recordsElement: HTMLElement | null = document.getElementById("records");
 
     (recordsElement as HTMLElement).innerHTML = "";
@@ -269,7 +284,9 @@ export class IncomeExpenses {
         this.modalElement.style.display = "block";
         this.modalElement.addEventListener("click", (e) => {
           if ((e.target as HTMLElement).id.includes("yes")) {
+
             that.deleteOperation(id);
+            // that.deleteIncome(id);
             Auth.removeOperationsCategory();
             location.href = "/income-expenses";
           } else if ((e.target as HTMLElement).id.includes("no")) {
@@ -293,10 +310,18 @@ export class IncomeExpenses {
     });
   }
 
-  async deleteOperation(id: string) {
+ private async deleteOperation(id: string): Promise<void> {
     await CustomHttp.request(
       config.host + "/operations/" + parseInt(id),
       "DELETE"
     );
   }
+  // public async deleteIncome(id: string) {
+  //   if (this.getInfoRefreshToken) {
+  //     await CustomHttp.request(
+  //       config.host + "/categories/income/" + id,
+  //       "DELETE"
+  //     );
+  //   }
+  // }
 }

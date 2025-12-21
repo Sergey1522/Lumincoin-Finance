@@ -59,12 +59,13 @@
         <div class="container-text mb-5">Редактирование дохода/расхода</div>
         <div class="update-create">
             <div class="update-input d-flex flex-column gap-3">
-                <input class="form-control" type="text" name="income" id="type" placeholder="Доход">
+                <input class="form-control" type="text" name="income" id="type" placeholder="Доход"  readonly>
+                <!-- <input class="form-control" type="text" name="income" id="category" placeholder="Доход"> -->
                 <select class="form-select" id="form-select-category" aria-label="Пример выбора по умолчанию">
-                    <option selected>Откройте для выбора категории выбора</option>
+                    <!-- <option selected id="form-select-option">Откройте для выбора категории выбора</option> -->
                 </select>
                 <input class="form-control" type="text" name="income" id="amount" placeholder="500$">
-                <input class="form-control" type="text" name="income" id="date" placeholder="11.09.2022">
+                <input class="form-control" type="date" name="income" id="date" placeholder="11.09.2022">
                 <input class="form-control" type="text" name="income" id="comments" placeholder="Комментарий...">
             </div>
             <div class="update-btn d-flex gap-4 mt-4">

@@ -26,6 +26,7 @@ export class UpdateIncomeExpense {
   private getUpdateOperationsId: string | null;
   private idOperationCategory: number | undefined;
   private resultOperationCategory:  OperationsExpensesType[] | OperationsIncomeType[] | null;
+  private titleCategory: string | null;
 
   constructor() {
     this.formSelectCategoryUpdate = document.getElementById(
@@ -49,6 +50,7 @@ export class UpdateIncomeExpense {
     this.btnNotSaveUpdateOperations = document.getElementById(
       "not-save"
     ) as HTMLInputElement;
+    this.titleCategory  = null;
 
     this.myCreateIncome = Auth.getIncome();
     this.getInfoUser = Auth.getUserInfo();
@@ -61,6 +63,7 @@ this.idOperationCategory = parseInt(this.getUpdateOperationsId);
     }
     
     this.resultOperationCategory = Auth.getOperationsCategory();
+    console.log(this.resultOperationCategory)
 
     this.initUpdateIncomeExpense(
       this.resultOperationCategory,
@@ -96,32 +99,34 @@ this.idOperationCategory = parseInt(this.getUpdateOperationsId);
         }
       }
 
- private initUpdateIncomeExpense(data:  OperationsExpensesType[] | OperationsIncomeType[] | null, id: number | undefined): void {
-    const res: OperationsExpensesType | undefined  = (data as OperationsExpensesType[] | OperationsIncomeType[]).find((item) => item.id === id);
+ public initUpdateIncomeExpense(data:  OperationsExpensesType[] | OperationsIncomeType[] | null, id: number | undefined): void {
+    const res: OperationsExpensesType | OperationsIncomeType | undefined  = (data as OperationsExpensesType[] | OperationsIncomeType[]).find((item) => item.id === id);
     this.inputUpdateTypeElement.value = (res as OperationsExpensesType | OperationsIncomeType).type;
+    console.log(res?.category);
+    this.titleCategory = String(id);
     this.amountUpdateCategoryElement.value = String((res as OperationsExpensesType | OperationsIncomeType).amount);
     this.dateUpdateCategoryElement.value = (res as OperationsExpensesType | OperationsIncomeType).date;
     this.commentsUpdateCategoryElement.value = (res as OperationsExpensesType | OperationsIncomeType).comment;
-
-    this.btnSaveUpdateOperations.addEventListener("click", (e: Event) => {
-      e.preventDefault();
-      this.saveUpdate(id);
-      console.log(this.amountUpdateCategoryElement.value);
-    });
-    this.btnNotSaveUpdateOperations.addEventListener("click", (e: Event) => {
-      location.href = "/income-expenses";
-    });
-
+  
     if (this.inputUpdateTypeElement.value === "income") {
       this.chooseMyIncome(this.myCreateIncome);
-      this.inputUpdateTypeElement.value = "income";
+      this.inputUpdateTypeElement.value = "доход";
     }
     if (this.inputUpdateTypeElement.value === "expense") {
       this.chooseMyExpenses(this.myCreateExpenses);
-      this.inputUpdateTypeElement.value = "expense";
+      this.inputUpdateTypeElement.value = "расход";
     }
     this.formSelectCategoryUpdate.addEventListener("change", (event: Event) => {
       this.optionCategory = (event.target as HTMLInputElement).value;
+      console.log(this.optionCategory);
+    });
+     this.btnSaveUpdateOperations.addEventListener("click", (e: Event) => {
+      e.preventDefault();
+      this.saveUpdate(id);
+  
+    });
+    this.btnNotSaveUpdateOperations.addEventListener("click", (e: Event) => {
+      location.href = "/income-expenses";
     });
   }
  private chooseMyIncome(incomes: CategoriesIncomeType[] | null): void | null {
@@ -130,6 +135,9 @@ this.idOperationCategory = parseInt(this.getUpdateOperationsId);
         const options = document.createElement("option");
         options.setAttribute("value", income.id);
         options.textContent = income.title;
+          if (income.title === this.titleCategory) {
+            options.selected = true;
+          }
         console.log(income.title);
         this.formSelectCategoryUpdate.appendChild(options);
       });
@@ -143,6 +151,9 @@ this.idOperationCategory = parseInt(this.getUpdateOperationsId);
         const options = document.createElement("option");
         options.setAttribute("value", expense.id);
         options.textContent = expense.title;
+         if (expense.title === this.titleCategory) {
+            options.selected = true;
+          }
         this.formSelectCategoryUpdate.appendChild(options);
       });
     } else {
@@ -151,6 +162,17 @@ this.idOperationCategory = parseInt(this.getUpdateOperationsId);
   }
 
  private async saveUpdate(id: number | undefined): Promise<void> {
+  switch (this.inputUpdateTypeElement.value) {
+      case 'доход': 
+      this.inputUpdateTypeElement.value = 'income';
+        break;
+        case 'расход':
+         this.inputUpdateTypeElement.value = 'expense' ;
+         break;
+    
+      default:
+        break;
+    }
     if (this.optionCategory) {
 const result = await CustomHttp.request(
       config.host + "/operations/" + id,

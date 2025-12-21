@@ -49,11 +49,11 @@ export class CreateIncomeExpense {
 
     if (this.typeTitle === "create-income") {
       this.chooseMyIncome(this.myCreateIncome);
-      this.inputTypeElement.value = "income";
+      this.inputTypeElement.value = "доход";
     }
     if (this.typeTitle === "create-expense") {
       this.chooseMyExpenses(this.myCreateExpenses);
-      this.inputTypeElement.value = "expense";
+      this.inputTypeElement.value = "расход";
     }
     this.formSelectCategory.addEventListener("change", (event) => {
       if (event.target) {
@@ -125,6 +125,17 @@ export class CreateIncomeExpense {
   }
 
   private async initCreate(): Promise<void> {
+    switch (this.inputTypeElement.value) {
+      case 'доход': 
+      this.inputTypeElement.value = 'income';
+        break;
+        case 'расход':
+         this.inputTypeElement.value = 'expense' ;
+         break;
+    
+      default:
+        break;
+    }
     if (this.optionCategory) {
       if (this.getInfoRefreshToken) {
         const result = await CustomHttp.request(

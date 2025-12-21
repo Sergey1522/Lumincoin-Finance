@@ -76,6 +76,7 @@ export class Income {
               '<button role="link" class="btn btn-danger" id="delete">Удалить</button>' +
               "</div>";
             console.log(result[i]);
+            console.log(Auth.getIncome());
             if (createIncome) {
               createIncome.appendChild(createNewIncome) as HTMLElement | null;
             }
@@ -124,6 +125,7 @@ export class Income {
           if ((e.target as HTMLElement).id.includes("yes")) {
             that.deleteIncome(id).then();
             Auth.removeIncome();
+            Auth.removeOperationsCategory();
             location.href = "/income";
           } else if ((e.target as HTMLElement).id.includes("no")) {
             return (modal.style.display = "none");
@@ -133,7 +135,7 @@ export class Income {
     }
   }
 
-  async deleteIncome(id: string) {
+ public async deleteIncome(id: string) {
     if (this.getInfoRefreshToken) {
       await CustomHttp.request(
         config.host + "/categories/income/" + id,
